@@ -1,0 +1,30 @@
+**To:** Robert W. Kaye, RA - Planning Director, NAVFAC FEAD
+**Cc:** Bil Hawkins, P.E., PMP - Deputy PWO, MCB Camp Butler G-F
+**From:** Anthony L. Potter - Facilities Planner, MCIPAC G-F PPE, Booz Allen Hamilton
+**Subject:** RE: Camp Schwab FY26 Block 9 - Working Your Six Points
+
+Rob,
+
+Appreciate the bus imagery. I will keep the crayons in my pocket, watch for the mayoral entourage, and try to draw inside the lines on a moving target.
+
+Walking your six points in order.
+
+1. Single-line entry by CCN. Concur. SCH-1024 is one CCN, so the proposed Block 9 collapses the eleven UNIFORMAT-prefixed scope rows into one Primary Facility line keyed to the building CCN. Same approach across SCH-3270, SCH-3213, SCH-3237, and SCH-3314, all single-CCN buildings.
+
+2. Area times unit cost on one line. Concur. SCH-1024 reads as area (26,488 SF, first-floor renovation), user-derived unit cost, amount. No discipline or trade breakdown on the items table.
+
+3. LSH composition. Fair question. On our side, LSH lands as a 2.5%-of-PRV program allowance, not as pre-allocated scope. Until design pins down the actual systems, the composition is not pre-set. I will take this back to Bil to settle between two paths. Path A: allocate the LSH dollars to the categories you listed (doors to B20 or C10, exit lighting to D50, ACM/LBP under Supporting Facilities as a discrete HAZMAT Abatement line); the LSH line goes away. Path B: keep LSH as one allowance line until design resolves it, then redistribute. Either preserves the dollar value.
+
+4. Block 10 unit-cost derivation sentence. Concur. Will add a sentence at the bottom of Block 10 alongside the floodplain statement, tuned to the actual basis used per building.
+
+5. Contingency, SIOH, and design fee. Concur on the percent rollup mechanism through the Associated Costs dialog. One open item before I lock: our local cost chain carries the design fee (6% for DBB or 4% for DB per acquisition method) and a separate 4% Construction Management adder. Need to confirm CM's local authority before deciding whether it rides with the design fee in Planning and Design or stands alone. SCH-1024 is Design-Build, so the design fee piece is 4% for that one.
+
+6. NAVFAC 11010.44 status. You caught me. I cited 11010.44E CH-1 in the prior email and I cannot stand that up against current DoN Issuances. The 1987 parent is inactive, you are right. MCO 11000.12 (08 Sep 2014) remains valid; the 2.5%-of-PRV LSH allowance ties to current FSRM program execution guidance and I owe you the right authoritative citation. Will come back with it.
+
+Net. Items 1, 2, and 4 are resolved. Item 5 closes once I confirm the CM authority and acquisition method per building. Items 3 and 6 are linked, and I will come back with the LSH path and the right reference. Open to a walk-through on SCH-1024 whenever works for you.
+
+V/R,
+
+Anthony Potter
+Facilities Planner | MCIPAC G-F PPE
+Booz Allen Hamilton
