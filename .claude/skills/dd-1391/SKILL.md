@@ -131,8 +131,8 @@ The contingency rate label on Block 9 reads "10.0%" but the math is 10% × Subto
 ## Personalities (context for review)
 
 - **CDR Justus K. O'Connor** - signing officer.
-- **Bil Hawkins** P.E., PMP - Deputy Public Works Officer at MCB Camp Butler G-F. Anthony's government client. Has accepted responsibility for the Block 9 depiction issue in writing. Owns the workbook architecture.
+- **Bil Hawkins** P.E., PMP - Deputy Public Works Officer at MCB Camp Butler G-F. Anthony's government client.
 - **Robert W. Kaye** RA - Planning Director, NAVFAC FEAD. Reviews 1391s on behalf of the signing chain. Stated complaint: "Block 9 is not broken down by discipline or broken out by Uniformat. Straight forward Primary Facility(s), Supporting, Contingency and on down to Other Appropriations."
 - **John Thurber** - NAVFAC HQ CI/MILCON, manual author, john.thurber@navy.mil, 202-685-9401. Contact for manual interpretation.
 
-Bil and Rob do not get along. Anthony works for Bil but must satisfy Rob's review. The deliverable does not take sides. It satisfies the manual.
+Anthony owns the cost estimate workbooks and the PAX paste-text. Anthony works for Bil and must satisfy Rob's review. The deliverable does not take sides. It satisfies the manual.

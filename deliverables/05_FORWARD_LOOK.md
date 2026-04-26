@@ -33,7 +33,7 @@ Each issue: title, why it matters, when it surfaces, what triggers it.
 
 **What triggers it.** Any change in the swing-space DOW, the unit's MCEN outage tolerance, or the construction sequencing.
 
-**Owner action.** Pull Will Lake's 15 Apr 2026 DOW result. Decide whether the SCH-3314 Block 10 PS gets phasing language inline or whether SCH-3314 is held back from FY27 submission and rolled to FY28. Anthony to coordinate with Bil Hawkins and Will Lake.
+**Owner action.** Pull Will Lake's 15 Apr 2026 DOW result. Decide whether the SCH-3314 Block 10 PS gets phasing language inline or whether SCH-3314 is held back from FY27 submission and rolled to FY28. Anthony to coordinate with the client and Will Lake.
 
 ## 4. SCH-3314 FAC code crosswalk
 
@@ -87,7 +87,7 @@ Each issue: title, why it matters, when it surfaces, what triggers it.
 
 ## 9. The recurring loop
 
-**Why it matters.** Each scope cycle: workbook updates → PAX .md goes stale → Block 9 face goes stale with it → reviewer comments come in on the stale picture → Bil and Rob disagree → Anthony bridges. The team-internal cost reference at `.claude/skills/dd-1391/` is the durable artifact that breaks the loop. It captures the manual rules, the locked program adder rates, the LSH placement decision, the verification gates, and the canonical face. Future cycles start from the rulebook, not from memory.
+**Why it matters.** Each scope cycle: cost estimate workbook updates → PAX paste-text goes stale → Block 9 face goes stale with it → reviewer comments come in on the stale picture → Anthony has to bridge competing interpretations against a manual that is partially silent. The team-internal cost reference at `.claude/skills/dd-1391/` is the durable artifact that breaks the loop. It captures the manual rules, the locked program adder rates, the LSH placement decision, the verification gates, and the canonical face. Future cycles start from the rulebook, not from memory.
 
 **When it surfaces.** Every revision.
 
