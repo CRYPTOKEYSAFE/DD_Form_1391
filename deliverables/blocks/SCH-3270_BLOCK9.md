@@ -103,23 +103,18 @@ SUPPORTING FACILITIES                                         |    |         |  
   NAVFAC 11010.44E CH-1 / MCO 11000.12)                        |    |         |                    |
 ```
 
-**Cost rollup adders (Contingency, SIOH, Design, CM, DB Design) — two equivalent options:**
+**Cost rollup adders via PAX `Associated Costs` button (single path, no double counting).**
 
-**Option A: Apply via PAX `%` (percent items) below the items list.** This is the cleanest representation of the canonical face. Each row is a separate percent item that PAX auto-calculates against the appropriate base.
+The items list above contains scope only (Primary Facility scope plus the LSH Special Construction Features sub-line under Supporting Facilities). The cost rollup adders are entered separately via the Associated Costs button as percent items. PAX exposes four named percent slots; the five workbook adders map onto them by combining NAVFAC Design 6% and Construction Management 4% into Planning and Design 10% (PAX has no native CM slot; the 4% CM rides under P&D). Block 10 narrative carries the Design and CM breakout for review.
 
-| Order | Percent item label | Rate | PAX `%` Base | Resulting $000 |
-|-------|--------------------|------|--------------|----------------:|
-|   1   | CONTINGENCY                            | 10.0% | Primary only           |     171.541 |
-|   2   | SIOH (OCONUS FSRM customer-directed)   | 8.0%  | Subtotal + Contingency |     229.971 |
-|   3   | DESIGN (NAVFAC agency-directed)        | 6.0%  | Subtotal + Contingency |     172.478 |
-|   4   | CONSTRUCTION MANAGEMENT                | 4.0%  | Subtotal + Contingency |     114.985 |
-|   5   | DESIGN/BUILD - DESIGN COST             | 4.0%  | Total Funded Cost      |     135.683 |
+| Order | PAX Associated Costs slot | Rate to enter | Workbook adder(s) covered |
+|-------|---------------------------|--------------:|---------------------------|
+|   1   | Contingency %             | 10.0%         | Contingency 10% |
+|   2   | SIOH %                    | 8.0%          | SIOH 8% (OCONUS FSRM customer-directed) |
+|   3   | Planning and Design %     | 10.0%         | NAVFAC Design 6% + CM 4% (combined) |
+|   4   | Design Build %            | 4.0%          | DB Design 4% (UFC 3-730-01) |
 
-Total Project Cost rolls up to $3,527,754 ≈ $3,528K (rounded). Total Funded Cost = $3,392,071.
-
-**Option B: Bake adders into a single dollar item.** If percent items are not in use for FY27 in PAX, add one dollar item to the Supporting Facilities section labeled `PROGRAM ADDERS (CONTINGENCY 10%, SIOH 8%, DESIGN 6%, CM 4%, DB DESIGN 4%)` with Total ($000) = $824.658 so the items list sums to the same Total Request of $3,528K. Block 10 narrative carries the rate breakdown.
-
-Use whichever option the FY27 PAX configuration accepts. Dollar value to the parent locked row is identical either way.
+**Items-list Subtotal:** $2,703,096 (Primary scope plus LSH). PAX renders the top-right Total Request after applying the four percent items above to the bases PAX uses internally. The workbook target Total Project Cost is $3,527,753. If the PAX-rendered Total Request and the workbook TPC do not match exactly, the difference is from a base-of-percent mismatch (workbook applies Contingency to Primary scope only; PAX applies Contingency to the items-list Subtotal which includes LSH). Reconcile by adjusting the workbook to match PAX's calculation or by raising the discrepancy to the team for a methodology call. Do not bake the adders into the items list as dollar lines while also entering them as percent items; that double-counts.
 
 ## Block 10 paired statement (PRIMARY FACILITY PS)
 
