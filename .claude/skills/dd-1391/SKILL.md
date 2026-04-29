@@ -63,6 +63,7 @@ Portfolio Locked TPC: $22,743,730. All Fi Web suffixes are M. Items Subtotal Tar
 ## PAX rollup math
 
 ```
+Items Subtotal (the discipline rollups summed; pasted into PAX)
 TCC = Items Subtotal x 1.10   (Cont 10% PAX-applied)
 TFC = TCC x 1.08              (SIOH 8% PAX-applied)
 TPC = TFC x 1.04              (DB 4% PAX-applied)
@@ -70,6 +71,8 @@ PD  = Items Subtotal x 0.06   (NON ADD; informational only)
 TPC = Items Subtotal x 1.23552
 Items Subtotal Target = LockedTPC / 1.23552
 ```
+
+Acronyms: TCC = Total Contract Cost (Items Subtotal + Contingency). TFC = Total Funded Cost (TCC + SIOH). TPC = Total Project Cost (TFC + DB Design); the printed face value on the DD Form 1391. PD = Planning and Design (NON ADD; does not roll into TPC).
 
 All five buildings reconcile delta = 0 at $000 at multiplier 1.23552.
 
@@ -81,6 +84,7 @@ All five buildings reconcile delta = 0 at $000 at multiplier 1.23552.
 - TPC preservation: every workbook reconciles to its locked TPC at $000.
 - Em dashes banned. No version-history scaffolding inside files.
 - Use "DB" not "DBD" in user-facing labels for Design-Build.
+- Builder gotcha: in `scripts/build_all.py`, never set a label cell value to a string starting with `=`. openpyxl writes any leading-`=` string as a formula and Excel renders `#NAME?`. Use plain text or a `+` prefix (which openpyxl preserves as text). Spell out `Total Contract Cost` and `Total Funded Cost`; do not abbreviate as `TCC`/`TFC` in label cells (use abbreviations only in the Formula/Source column or the PAX rollup math block above).
 
 ## Authority references
 
