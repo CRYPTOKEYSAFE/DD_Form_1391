@@ -416,11 +416,11 @@ def build_estimate(wb, b, blk, DERIV, scope_total_row):
     pax = [
         ("Items Subtotal",                         f"=C{items_sub_row}",                              "From Section A"),
         ("+ Contingency (10.0%)  PAX-applied",     f"=C{items_sub_row}*0.10",                         "FSRM program-directed"),
-        ("= Total Contract Cost",                  f"=C{items_sub_row}*1.10",                         "Items Subtotal x 1.10"),
+        ("Total Contract Cost",                    f"=C{items_sub_row}*1.10",                         "Items Subtotal x 1.10"),
         ("+ SIOH (8.0%)  PAX-applied",             f"=C{items_sub_row}*1.10*0.08",                    "OCONUS FSRM customer-directed"),
-        ("= Total Funded Cost",                    f"=C{items_sub_row}*1.10*1.08",                    "TCC x 1.08"),
+        ("Total Funded Cost",                      f"=C{items_sub_row}*1.10*1.08",                    "Total Contract Cost x 1.08"),
         ("+ DB Design (4.0%)  PAX-applied",        f"=C{items_sub_row}*1.10*1.08*0.04",               "UFC 3-730-01 (2024)"),
-        ("= TOTAL PROJECT COST",                   f"=C{items_sub_row}*1.23552",                      "TFC x 1.04"),
+        ("TOTAL PROJECT COST",                     f"=C{items_sub_row}*1.23552",                      "Total Funded Cost x 1.04"),
         ("TOTAL PROJECT COST ($000 rounded)",      None,                                              "Printed face value on DD Form 1391"),
         ("Locked TPC ($000 rounded)",              f"=ROUND(PARAMETERS!B{locked}/1000,0)",            "Reconciliation target"),
         ("Reconciliation (must equal 0)",          None,                                              "Printed minus Locked"),
@@ -439,7 +439,7 @@ def build_estimate(wb, b, blk, DERIV, scope_total_row):
             c.value = val
         nf = "#,##0;[Red]-#,##0;0" if "Reconciliation" in label else "#,##0"
         style_total(c, num_fmt=nf)
-        if label == "= TOTAL PROJECT COST": tpc_full_row = r
+        if label == "TOTAL PROJECT COST": tpc_full_row = r
         if label == "Locked TPC ($000 rounded)": locked_round_row = r
         ws.cell(row=r, column=4).value = note; style_data(ws.cell(row=r, column=4))
         r += 1
