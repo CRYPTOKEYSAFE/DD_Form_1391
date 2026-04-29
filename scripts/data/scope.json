@@ -1,0 +1,2436 @@
+{
+  "1024": {
+    "sections": [
+      {
+        "before_item_count": 0,
+        "title": "1.  ARMORY VAULT CONVERSION - 28 Barracks Rooms to 14 Armory Vaults"
+      },
+      {
+        "before_item_count": 15,
+        "title": "2.  ARMORY EXTERIOR - Walkways, Landings, Concrete Pads"
+      },
+      {
+        "before_item_count": 18,
+        "title": "3.  GYM TO WORKSPACE CONVERSION - CLB-4 Commo Swing Space to 4th MarRegt Admin/Ops"
+      },
+      {
+        "before_item_count": 19,
+        "title": "4.  COMM ROOM & WEAPONS CLEANING AREA"
+      },
+      {
+        "before_item_count": 23,
+        "title": "5.  ADMIN - Laundry Room Conversion to Administrative Workspace"
+      },
+      {
+        "before_item_count": 27,
+        "title": "6.  BATHS TO OSS VAULT - Locker Rooms / Sauna / Steam Room to OSS w/ SIPR Network"
+      },
+      {
+        "before_item_count": 50,
+        "title": "7.  BUILDING GENERAL - Whole-Building Systems & Code Compliance"
+      },
+      {
+        "before_item_count": 55,
+        "title": "8.  BUILDING TELECOM - Telecom Room, OSP & ISP Cabling per UFC 3-580-01"
+      },
+      {
+        "before_item_count": 60,
+        "title": "9.  EXTERIOR - Covered Overhangs, Pavilion, Site Work"
+      },
+      {
+        "before_item_count": 64,
+        "title": "10.  RESTROOMS & MISCELLANEOUS"
+      },
+      {
+        "before_item_count": 66,
+        "title": "11.  HAZARDOUS MATERIALS - Asbestos Mastic Abatement (Bhate Environmental Associates, 19 Nov 2001)"
+      }
+    ],
+    "items": [
+      {
+        "item": 4,
+        "group": "Armory",
+        "desc": "New vault doors/frames/locksets - GSA Class V, Hamilton CI-5 (4 armory hallway locations)",
+        "qty": 4,
+        "unit": "EA",
+        "uc": 14599.4,
+        "uniformat": "C10",
+        "notes": "Hamilton CI-5 door + flange set: $10,143.40 | Prorated air freight (TQL Global, 5-door shipment CVG-OKA): $1,956.00 | Install labor (certified 2-person crew, OCONUS): $2,500.00 | Unit total: $14,599.40"
+      },
+      {
+        "item": 8,
+        "group": "Armory",
+        "desc": "Structural walls to support vault doors, drop ceiling infrastructure",
+        "qty": 4,
+        "unit": "EA",
+        "uc": 15000,
+        "uniformat": "C10",
+        "notes": "Reinforced masonry/concrete walls, headers, lintels for vault door support"
+      },
+      {
+        "item": 5,
+        "group": "Armory",
+        "desc": "Remove 28 windows/frames and 2 exit doors/frames (30 openings total)",
+        "qty": 30,
+        "unit": "EA",
+        "uc": 500,
+        "uniformat": "F20",
+        "notes": "Window and door removal incl frame, disposal"
+      },
+      {
+        "item": 6,
+        "group": "Armory",
+        "desc": "CMU wall enclosures at 17 former window openings",
+        "qty": 17,
+        "unit": "EA",
+        "uc": 5000,
+        "uniformat": "B20",
+        "notes": "CMU infill 5'x6' openings: block, mortar, rebar, tie-in to existing structure"
+      },
+      {
+        "item": 6,
+        "group": "Armory",
+        "desc": "New weapons port issue windows - custom steel frame, ballistic rated (11 EA)",
+        "qty": 11,
+        "unit": "EA",
+        "uc": 3500,
+        "uniformat": "B20",
+        "notes": "Custom fabricated steel-frame weapon issue port windows, installed"
+      },
+      {
+        "item": 7,
+        "group": "Armory",
+        "desc": "Remove drop ceilings in all 28 armory rooms (6,270 SF)",
+        "qty": 6270,
+        "unit": "SF",
+        "uc": 4,
+        "uniformat": "F20",
+        "notes": "Ceiling grid/tile removal, disposal"
+      },
+      {
+        "item": 7,
+        "group": "Armory",
+        "desc": "Paint all armory interior walls - 28 rooms (6,270 SF)",
+        "qty": 6270,
+        "unit": "SF",
+        "uc": 4,
+        "uniformat": "C30",
+        "notes": "Interior latex paint, wall prep"
+      },
+      {
+        "item": 11,
+        "group": "Armory",
+        "desc": "Armory bathrooms: Remove CT floor/walls, refinish, paint - 11 bathrooms (~1,650 SF)",
+        "qty": 1650,
+        "unit": "SF",
+        "uc": 10,
+        "uniformat": "C30",
+        "notes": "Ceramic tile removal, skim coat, paint, VCT. 11 baths x 150 SF"
+      },
+      {
+        "item": 5,
+        "group": "Armory",
+        "desc": "Remove 11 bathroom fixture sets (toilet, tub, sink, accessories)",
+        "qty": 11,
+        "unit": "EA",
+        "uc": 2500,
+        "uniformat": "F20",
+        "notes": "Full fixture removal, disconnect, disposal per set"
+      },
+      {
+        "item": 12,
+        "group": "Armory",
+        "desc": "Cap plumbing lines - 11 armory bathrooms",
+        "qty": 11,
+        "unit": "EA",
+        "uc": 2000,
+        "uniformat": "D20",
+        "notes": "Cap water supply/drainage, includes access and patching"
+      },
+      {
+        "item": 13,
+        "group": "Armory",
+        "desc": "Adjust valves to limit deadlegs in capped armory plumbing lines",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 10000,
+        "uniformat": "D20",
+        "notes": "System-wide valve adjustment to prevent stagnation"
+      },
+      {
+        "item": 10,
+        "group": "Armory",
+        "desc": "Realign all electrical/mechanical ceiling fixtures after ceiling removal - 28 rooms",
+        "qty": 28,
+        "unit": "EA",
+        "uc": 2000,
+        "uniformat": "D30",
+        "notes": "Relocate/adjust HVAC diffusers, sprinklers, fire alarm, lighting per room"
+      },
+      {
+        "item": 9,
+        "group": "Armory",
+        "desc": "Electronic Security System (IDS) - 2 zones, 14 vaults: panel, BMS, PIR, keypads, fiber, conduit",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 400000,
+        "uniformat": "D50",
+        "notes": "ESAMS-compliant IDS: 2 zones, 14 vault areas, BMS, PIR, keypads, fiber backbone, conduit, testing"
+      },
+      {
+        "item": 14,
+        "group": "Armory",
+        "desc": "Install 28 new quad Work Area Outlets (WAOs) in armory spaces",
+        "qty": 28,
+        "unit": "EA",
+        "uc": 1000,
+        "uniformat": "D50",
+        "notes": "Quad WAO: 4-port data/voice outlet, conduit, cabling, termination"
+      },
+      {
+        "item": 15,
+        "group": "Armory",
+        "desc": "New metal shelves at 11 weapons issue port windows",
+        "qty": 11,
+        "unit": "EA",
+        "uc": 600,
+        "uniformat": "E20",
+        "notes": "Stainless/galvanized steel shelf, brackets, fasteners"
+      },
+      {
+        "item": 2,
+        "group": "Armory Ext",
+        "desc": "Extend backside walkways - concrete sidewalk, safety railings (~200 LF)",
+        "qty": 200,
+        "unit": "LF",
+        "uc": 200,
+        "uniformat": "G20",
+        "notes": "Concrete sidewalk, railings, grading, landscaping"
+      },
+      {
+        "item": 3,
+        "group": "Armory Ext",
+        "desc": "New exterior landing/walkway at 11 weapons issue port windows",
+        "qty": 11,
+        "unit": "EA",
+        "uc": 1400,
+        "uniformat": "G20",
+        "notes": "Concrete landing pad ~100 SF each at 11 issue window locations"
+      },
+      {
+        "item": 16,
+        "group": "Armory Ext",
+        "desc": "New exterior concrete pads at issue windows - civil (11 locations x 80 SF)",
+        "qty": 880,
+        "unit": "SF",
+        "uc": 14,
+        "uniformat": "G20",
+        "notes": "Formed concrete pad, 4 inch, gravel base"
+      },
+      {
+        "item": 1,
+        "group": "Gym/Admin",
+        "desc": "Gym hallway: Patch concrete baseboard/wall, paint interior, new VCT flooring",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 5000,
+        "uniformat": "C30",
+        "notes": "Minor patching, paint, and flooring in gym hallway"
+      },
+      {
+        "item": 17,
+        "group": "Comm Room",
+        "desc": "Add exhaust ventilation to new indoor weapons cleaning area",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 15000,
+        "uniformat": "D30",
+        "notes": "Exhaust fan, ductwork, exterior louver, controls for weapons cleaning fumes"
+      },
+      {
+        "item": 18,
+        "group": "Comm Room",
+        "desc": "Rec Room: New COMM room 8'x10' w/ gypsum walls, VCT, paint; replace acoustical ceiling",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 15000,
+        "uniformat": "C10",
+        "notes": "New 80 SF room: partitions, door, ceiling, flooring, paint"
+      },
+      {
+        "item": 20,
+        "group": "Comm Room",
+        "desc": "Rec Room: New electrical outlets and switches in COMM room",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 8000,
+        "uniformat": "D50",
+        "notes": "Outlets, switches, dedicated circuits for comm equipment"
+      },
+      {
+        "item": 21,
+        "group": "Comm Room",
+        "desc": "Split A/C systems for telecom room and COMMSEC storage vault (2 EA)",
+        "qty": 2,
+        "unit": "EA",
+        "uc": 12000,
+        "uniformat": "D30",
+        "notes": "Ductless mini-split A/C, dedicated cooling for telecom/COMMSEC spaces"
+      },
+      {
+        "item": 22,
+        "group": "Admin",
+        "desc": "Adjust HVAC supply duct/diffusers and exhaust for admin use in laundry room",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 8000,
+        "uniformat": "D30",
+        "notes": "Reroute/adjust ductwork, diffusers, registers for office occupancy"
+      },
+      {
+        "item": 23,
+        "group": "Admin",
+        "desc": "Cap water supply, drainage, floor drains for washers and utility sink; adjust valves",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 5000,
+        "uniformat": "D20",
+        "notes": "Cap and seal all laundry plumbing, reduce deadlegs"
+      },
+      {
+        "item": 24,
+        "group": "Admin",
+        "desc": "Laundry Room: Repaint all interior walls, new VCT flooring (~300 SF)",
+        "qty": 300,
+        "unit": "SF",
+        "uc": 9,
+        "uniformat": "C30",
+        "notes": "Interior paint + VCT: $4/SF paint + $5/SF VCT"
+      },
+      {
+        "item": 25,
+        "group": "Admin",
+        "desc": "Remove dryer exhaust duct and cap wall vent",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 1500,
+        "uniformat": "F20",
+        "notes": "Duct removal, vent cap, patch and paint exterior/interior wall"
+      },
+      {
+        "item": 26,
+        "group": "Baths>OSS",
+        "desc": "Demo CIP concrete walls in shower/locker/sauna areas for open floorplan",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 30000,
+        "uniformat": "F20",
+        "notes": "Structural demolition of CIP concrete walls - engineering assessment required for load-bearing"
+      },
+      {
+        "item": 35,
+        "group": "Baths>OSS",
+        "desc": "Cut CIP wall for new door opening from showers to hallway",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 5000,
+        "uniformat": "F20",
+        "notes": "Saw-cut CIP wall, install new header/frame - structural engineering required"
+      },
+      {
+        "item": 39,
+        "group": "Baths>OSS",
+        "desc": "Mens: Complete demo - toilet partitions, CT floor/walls, fixtures, lockers, ceiling, showers",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 14000,
+        "uniformat": "F20",
+        "notes": "Full gut: 2 toilets, 2 urinals, 2 sinks, 2 showers, partitions, lockers, tile, ceiling"
+      },
+      {
+        "item": 40,
+        "group": "Baths>OSS",
+        "desc": "Womens: Complete demo - benches, showers, fixtures, CT floor/walls, partitions, ceiling",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 12000,
+        "uniformat": "F20",
+        "notes": "Full gut: 2 showers, 2 toilets, 2 sinks, partitions, tile, ceiling"
+      },
+      {
+        "item": 30,
+        "group": "Baths>OSS",
+        "desc": "Sauna Room: Remove all wood seats/benches/ceiling/walls/flooring, brick enclosure, exhaust vents",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 8000,
+        "uniformat": "F20",
+        "notes": "Complete sauna strip-out to bare structure"
+      },
+      {
+        "item": 43,
+        "group": "Baths>OSS",
+        "desc": "Steam Room: Remove ceramic tile walls, benches, flooring, door/frame",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 6000,
+        "uniformat": "F20",
+        "notes": "Complete steam room strip-out including tile and moisture barriers"
+      },
+      {
+        "item": 27,
+        "group": "Baths>OSS",
+        "desc": "Mens: New ceiling, wall refinish/paint, level floor, VCT, plug drains (~398 SF)",
+        "qty": 398,
+        "unit": "SF",
+        "uc": 35,
+        "uniformat": "C30",
+        "notes": "Full renovation finishes: ceiling grid/tile, wall prep/paint, floor leveling, VCT"
+      },
+      {
+        "item": 28,
+        "group": "Baths>OSS",
+        "desc": "Womens: New lighting, VCT flooring, wall refinish/paint, new alum door/frame/lockset (~300 SF)",
+        "qty": 300,
+        "unit": "SF",
+        "uc": 32,
+        "uniformat": "C30",
+        "notes": "Full renovation finishes + new aluminum entry door assembly"
+      },
+      {
+        "item": 41,
+        "group": "Baths>OSS",
+        "desc": "Sauna Room: New VCT flooring, refinish concrete walls, new ceiling, entry door (~97 SF)",
+        "qty": 97,
+        "unit": "SF",
+        "uc": 28,
+        "uniformat": "C30",
+        "notes": "Convert to admin space: floor, walls, ceiling, door"
+      },
+      {
+        "item": 42,
+        "group": "Baths>OSS",
+        "desc": "Steam Room: New VCT flooring, refinish concrete walls, new ceiling, entry door (~124 SF)",
+        "qty": 124,
+        "unit": "SF",
+        "uc": 28,
+        "uniformat": "C30",
+        "notes": "Convert to admin space: floor, walls, ceiling, door"
+      },
+      {
+        "item": 31,
+        "group": "Baths>OSS",
+        "desc": "Fitness Room Vault: New security door/frame/lockset/closure (X-10 combination lock)",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 4000,
+        "uniformat": "C10",
+        "notes": "Heavy-duty security door with X-10 lock for COMMSEC storage"
+      },
+      {
+        "item": 36,
+        "group": "Baths>OSS",
+        "desc": "Modify/cap/remove all plumbing - sauna, steam, mens/womens locker rooms",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 18000,
+        "uniformat": "D20",
+        "notes": "Full plumbing removal/capping across 4 wet areas"
+      },
+      {
+        "item": 37,
+        "group": "Baths>OSS",
+        "desc": "Install new DX multi-zone split A/C system for new OSS area",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 65000,
+        "uniformat": "D30",
+        "notes": "Multi-zone VRF/DX: outdoor unit, indoor units, refrigerant piping, controls, startup"
+      },
+      {
+        "item": 29,
+        "group": "Baths>OSS",
+        "desc": "Steam Room area: New electrical light fixtures, outlets, switches, COMM drops",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 5000,
+        "uniformat": "D50",
+        "notes": "Electrical fit-out for converted admin space"
+      },
+      {
+        "item": 32,
+        "group": "Baths>OSS",
+        "desc": "Sauna Room: Remove existing electrical, new lights/outlets/switches, COMM drops",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 7000,
+        "uniformat": "D50",
+        "notes": "Full electrical replacement for converted space"
+      },
+      {
+        "item": 33,
+        "group": "Baths>OSS",
+        "desc": "Mens: New electrical light fixtures, outlets, switches, COMM requirements",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 6000,
+        "uniformat": "D50",
+        "notes": "Electrical fit-out for converted admin space"
+      },
+      {
+        "item": 34,
+        "group": "Baths>OSS",
+        "desc": "Womens: New electrical fixtures, wiring, outlets, switches, relocate fire alarm",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 6000,
+        "uniformat": "D50",
+        "notes": "Electrical fit-out + fire alarm relocation"
+      },
+      {
+        "item": 44,
+        "group": "Baths>OSS",
+        "desc": "Steam Room: Remove electrical fixtures/lights/alarms/wiring",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 3500,
+        "uniformat": "F20",
+        "notes": "Demo tier electrical removal (supplement item 29)"
+      },
+      {
+        "item": 45,
+        "group": "Baths>OSS",
+        "desc": "Mens: Remove all electrical light fixtures and switches",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 2000,
+        "uniformat": "F20",
+        "notes": "Demo tier electrical removal"
+      },
+      {
+        "item": 46,
+        "group": "Baths>OSS",
+        "desc": "Womens: Remove all electrical fixtures, wiring, outlets, switches",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 2000,
+        "uniformat": "F20",
+        "notes": "Demo tier electrical removal"
+      },
+      {
+        "item": 38,
+        "group": "Baths>OSS",
+        "desc": "SIPR network: Lockable wallmount enclosure, backboard, ground bus bar, fiber optic from TR, ~10 quad WAOs, conduit - CNSSAM TEMPEST/01-13",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 220000,
+        "uniformat": "D50",
+        "notes": "Full SIPR infrastructure per CNSSAM TEMPEST/01-13: enclosure, backboard, bus bar, fiber, WAOs, conduit, testing"
+      },
+      {
+        "item": 63,
+        "group": "Baths>OSS",
+        "desc": "OSS Vault entrance: GSA Class V vault door, frame, flange set, hardware, certified installation, and prorated air shipping (1 EA)",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 14599.4,
+        "uniformat": "C10",
+        "notes": "Hamilton CI-5 door + flange set: $10,143.40 | Prorated air freight (TQL Global, 5-door shipment, CVG-OKA): $1,956.00 | Install labor (certified 2-person crew, OCONUS): $2,500.00 | Unit total: $14,599.40"
+      },
+      {
+        "item": 64,
+        "group": "Baths>OSS",
+        "desc": "OSS Vault entrance: Structural reinforcement at CIP wall opening for vault door emplacement (steel header, threshold plate, anchor bolts into CIP wall)",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 12000,
+        "uniformat": "C10",
+        "notes": "Supplemental to Item 35 (CIP wall cut $5,000). Vault door ~900 lbs requires steel lintel, sill plate, and frame anchoring into existing CIP wall."
+      },
+      {
+        "item": 47,
+        "group": "Bldg General",
+        "desc": "Adjust mechanical components first floor (HVAC diffusers, sprinklers, fire alarms) for ceiling removal",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 35000,
+        "uniformat": "D30",
+        "notes": "First floor mechanical adjustment: sprinkler heads, diffusers, FA devices"
+      },
+      {
+        "item": 48,
+        "group": "Bldg General",
+        "desc": "Replace air-cooled chillers (2 EA) and chilled water circulating pumps (2 EA) - END OF SERVICE LIFE",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 500000,
+        "uniformat": "D30",
+        "notes": "CRITICAL: Chillers 12+ yrs past service life. 2x 100-150 ton chillers + 2x CW pumps + controls. VERIFY tonnage with FEAD mech engineer."
+      },
+      {
+        "item": 49,
+        "group": "Bldg General",
+        "desc": "Test, Adjust, Balance (TAB) all duct HVAC systems throughout facility (all 4 floors)",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 60000,
+        "uniformat": "D30",
+        "notes": "Full building TAB per AABC/NEBB standards. VERIFY if scope is first floor only or whole building."
+      },
+      {
+        "item": 50,
+        "group": "Bldg General",
+        "desc": "Replace 4 fire hose cabinets in new armory spaces (recessed, stainless, w/ hose/extinguisher)",
+        "qty": 4,
+        "unit": "EA",
+        "uc": 2500,
+        "uniformat": "D40",
+        "notes": "Recessed FHC per NFPA 10, stainless steel finish"
+      },
+      {
+        "item": 51,
+        "group": "Bldg General",
+        "desc": "Add supplemental water fountains in new OSS/Admin areas (4 EA)",
+        "qty": 4,
+        "unit": "EA",
+        "uc": 5000,
+        "uniformat": "D20",
+        "notes": "Wall-mounted water fountains, plumbing connection, ADA compliance"
+      },
+      {
+        "item": 52,
+        "group": "Telecom",
+        "desc": "Demo existing TR - remove all existing racks, cabling, equipment, flooring, paint",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 12000,
+        "uniformat": "F20",
+        "notes": "Full TR strip-out for renovation"
+      },
+      {
+        "item": 53,
+        "group": "Telecom",
+        "desc": "Construct new TR: raised floor, racks, UPS, patch panels, grounding, EPO, fire suppression, HVAC",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 85000,
+        "uniformat": "D50",
+        "notes": "Full TR build-out per UFC 3-580-01 and MCIPAC G6 policy"
+      },
+      {
+        "item": 54,
+        "group": "Telecom",
+        "desc": "Install OSP fiber optic cable from nearest demarcation point to building TR",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 15000,
+        "uniformat": "D50",
+        "notes": "OSP fiber, conduit, hand-holes, termination"
+      },
+      {
+        "item": 55,
+        "group": "Telecom",
+        "desc": "Install ISP horizontal cabling - 28 drops to new armory spaces, admin, OSS areas",
+        "qty": 28,
+        "unit": "EA",
+        "uc": 1200,
+        "uniformat": "D50",
+        "notes": "Cat6A or OM3 fiber per MCIPAC G6 policy, conduit, termination"
+      },
+      {
+        "item": 56,
+        "group": "Telecom",
+        "desc": "Remove existing ISP cabling throughout first floor",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 4000,
+        "uniformat": "F20",
+        "notes": "Removal of legacy cabling, conduit, boxes per demo scope"
+      },
+      {
+        "item": 57,
+        "group": "Exterior",
+        "desc": "Tree removal at new exterior concrete pad locations (6 EA)",
+        "qty": 6,
+        "unit": "EA",
+        "uc": 1500,
+        "uniformat": "G10",
+        "notes": "Tree removal and disposal, stump grinding"
+      },
+      {
+        "item": 58,
+        "group": "Exterior",
+        "desc": "Steel-frame covered overhang at issue windows - 3 locations",
+        "qty": 3,
+        "unit": "EA",
+        "uc": 35000,
+        "uniformat": "G20",
+        "notes": "Steel-frame canopy structure, metal roofing, concrete footings, per location"
+      },
+      {
+        "item": 59,
+        "group": "Exterior",
+        "desc": "New outdoor pavilion - steel frame, metal roof, concrete slab (approx 20'x40')",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 55000,
+        "uniformat": "G20",
+        "notes": "Steel-frame pavilion: columns, roof, 800 SF concrete slab, perimeter drainage"
+      },
+      {
+        "item": 60,
+        "group": "Exterior",
+        "desc": "Site drainage improvements at new concrete pad locations",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 5000,
+        "uniformat": "G20",
+        "notes": "French drains or surface grading at pad locations"
+      },
+      {
+        "item": 61,
+        "group": "Rest/Misc",
+        "desc": "Public restroom: New fixtures (2 toilets, 2 sinks, accessories) for general use area",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 15000,
+        "uniformat": "D20",
+        "notes": "Replace fixtures, handles, accessories - ADA compliance check"
+      },
+      {
+        "item": 62,
+        "group": "Rest/Misc",
+        "desc": "New security door/frame/lockset for exterior storage (1 EA)",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 6000,
+        "uniformat": "C10",
+        "notes": "Heavy-duty exterior security door with lockset and door closer"
+      },
+      {
+        "item": 65,
+        "group": "Hazmat",
+        "desc": "Asbestos mastic abatement - OSS full-gut areas (mens locker ~398 SF, womens ~300 SF, sauna ~97 SF, steam ~124 SF); cove base/kickboard removal triggers abatement of underlying H3 ACM mastic (15% Chrysotile)",
+        "qty": 234,
+        "unit": "LF",
+        "uc": 25,
+        "uniformat": "F20",
+        "notes": "Bhate Survey 19 Nov 2001, H3: 15% Chrysotile mastic under kickboard, 8,392 LF building-wide. Scope-limited to OSS gut rooms only. Perimeter est from room SF. FEAD ENV/IH to field-verify LF and unit cost before construction."
+      },
+      {
+        "item": 66,
+        "group": "Hazmat",
+        "desc": "Asbestos mastic abatement - armory bathroom VCT/CT renovation (11 bathrooms, ~1,650 SF total); floor tile and wall base removal at wall junctions triggers abatement of underlying H3 ACM mastic (15% Chrysotile)",
+        "qty": 385,
+        "unit": "LF",
+        "uc": 25,
+        "uniformat": "F20",
+        "notes": "Bhate Survey 19 Nov 2001, H3. Armory scope Item 11: CT floor/wall removal in 11 baths. VCT/CT installation requires cove base removal at perimeter. Perimeter est: 11 baths x ~35 LF avg = 385 LF. FEAD ENV/IH to field-verify."
+      },
+      {
+        "item": 67,
+        "group": "Hazmat",
+        "desc": "Asbestos mastic abatement - gym conversion (VCT 1,749 SF, est. 168 LF perimeter) and laundry/admin conversion (VCT 300 SF, est. 70 LF perimeter); new VCT installation at wall base triggers abatement of underlying H3 ACM mastic",
+        "qty": 238,
+        "unit": "LF",
+        "uc": 25,
+        "uniformat": "F20",
+        "notes": "Bhate Survey 19 Nov 2001, H3. Scope Items 3B (gym VCT) and 24 (laundry VCT) require base removal at wall perimeter. Combined perimeter est 238 LF. FEAD ENV/IH to field-verify."
+      }
+    ]
+  },
+  "3213": {
+    "sections": [
+      {
+        "before_item_count": 0,
+        "title": "1.  TELECOM INFRASTRUCTURE MODERNIZATION"
+      },
+      {
+        "before_item_count": 6,
+        "title": "2.  S-2 VAULT CONSTRUCTION - TWO VAULT SPACES"
+      },
+      {
+        "before_item_count": 12,
+        "title": "3.  SIPR NETWORK RACK INSTALLATION"
+      },
+      {
+        "before_item_count": 16,
+        "title": "4.  PATHWAY - BN CONFERENCE ROOM TO S-2 VAULT"
+      },
+      {
+        "before_item_count": 22,
+        "title": "5.  CONSTRUCT 6 PRIVATE OFFICES"
+      },
+      {
+        "before_item_count": 30,
+        "title": "6.  EOD OFFICE PARTITION"
+      },
+      {
+        "before_item_count": 37,
+        "title": "7.  CONSTRUCT SECURE STORAGE - UNIT MAIL ROOM"
+      },
+      {
+        "before_item_count": 42,
+        "title": "8.  HAZARDOUS MATERIALS - SURVEY AND ABATEMENT"
+      },
+      {
+        "before_item_count": 47,
+        "title": "9.  HVAC FULL SYSTEM REPLACEMENT"
+      },
+      {
+        "before_item_count": 61,
+        "title": "10.  PLUMBING FULL REPLACEMENT AND RESTROOM RENOVATION"
+      },
+      {
+        "before_item_count": 71,
+        "title": "11.  OVERHEAD DOORS AND AIR CURTAINS"
+      }
+    ],
+    "items": [
+      {
+        "item": 1,
+        "group": "Telecom",
+        "desc": "Demo existing telecom equipment, racks, cabling, and legacy infrastructure in telecom room",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 12000,
+        "uniformat": "D50",
+        "notes": "RS Means FY24 CONUS: Equipment and cable demolition, telecom room. RSM 28 05 05."
+      },
+      {
+        "item": 2,
+        "group": "Telecom",
+        "desc": "Construct new telecom room - equipment racks, UPS, patch panels, grounding bus bar, EPO, fire suppression, HVAC, raised floor",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 65000,
+        "uniformat": "D50",
+        "notes": "RS Means FY24 CONUS: Telecom room build-out, commercial, complete. RSM 28 05 13."
+      },
+      {
+        "item": 3,
+        "group": "Telecom",
+        "desc": "Install OSP fiber optic cable from base telecom demarcation point to building telecom room",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 15000,
+        "uniformat": "D50",
+        "notes": "RS Means FY24 CONUS: OSP fiber, includes conduit, pull boxes, termination. RSM 27 13 23."
+      },
+      {
+        "item": 4,
+        "group": "Telecom",
+        "desc": "Install ISP horizontal cabling - Cat6A to all converted office and work spaces (30 drops)",
+        "qty": 30,
+        "unit": "EA",
+        "uc": 1200,
+        "uniformat": "D50",
+        "notes": "RS Means FY24 CONUS: Cat6A horizontal cable, pull, terminate, test, 90 LF avg run. RSM 27 15 43."
+      },
+      {
+        "item": 5,
+        "group": "Telecom",
+        "desc": "Install new work area outlets (WAOs) - quad WAO in all converted office spaces (24 EA)",
+        "qty": 24,
+        "unit": "EA",
+        "uc": 1000,
+        "uniformat": "D50",
+        "notes": "RS Means FY24 CONUS: Quad data outlet, flush mounted, complete. RSM 27 15 43."
+      },
+      {
+        "item": 6,
+        "group": "Telecom",
+        "desc": "Building grounding system verification and upgrade for telecom modernization per TIA-607-C",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 8000,
+        "uniformat": "D50",
+        "notes": "RS Means FY24 CONUS: Telecom grounding, commercial building, per TIA-607-C. RSM 26 05 26."
+      },
+      {
+        "item": 7,
+        "group": "S-2 Vault",
+        "desc": "New reinforced vault walls with structural supports - CMU or CIP concrete, 2 EA (one per vault space)",
+        "qty": 2,
+        "unit": "EA",
+        "uc": 28000,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: CMU reinforced vault wall, 8-in block, grouted solid. RSM 04 22 00."
+      },
+      {
+        "item": 8,
+        "group": "S-2 Vault",
+        "desc": "GSA Class V vault door, frame, flange set, hardware, certified installation, prorated air freight - 2 EA per MCO 5530.14A + UFC 4-010-05",
+        "qty": 2,
+        "unit": "EA",
+        "uc": 14599,
+        "uniformat": "C10",
+        "notes": "Direct procurement: Hamilton CI-5 Class V vault door, TQL Global shipment, all-in unit cost confirmed."
+      },
+      {
+        "item": 9,
+        "group": "S-2 Vault",
+        "desc": "IDS sensor installation - 2 vault spaces: PIR, magnetic door contact, keypad per vault, ESAMS compliant",
+        "qty": 2,
+        "unit": "EA",
+        "uc": 8000,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: IDS zone sensor package, vault, 2-zone config. RSM 28 16 16."
+      },
+      {
+        "item": 10,
+        "group": "S-2 Vault",
+        "desc": "Vault electrical - LED lighting, outlets, emergency egress lighting per vault space, 2 EA",
+        "qty": 2,
+        "unit": "EA",
+        "uc": 6000,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: Vault electrical package, lighting and power, per space. RSM 26 05 19."
+      },
+      {
+        "item": 11,
+        "group": "S-2 Vault",
+        "desc": "Dedicated vault ventilation - supply/exhaust isolation with damper per GSA Class V vault requirements, 2 EA",
+        "qty": 2,
+        "unit": "EA",
+        "uc": 12000,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: Vault HVAC isolation, supply/exhaust with fire/smoke damper, per vault. RSM 23 33 00."
+      },
+      {
+        "item": 12,
+        "group": "S-2 Vault",
+        "desc": "Vault interior finishes - VCT flooring, interior paint, base molding, 2 EA (one per vault space)",
+        "qty": 2,
+        "unit": "EA",
+        "uc": 3000,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: VCT flooring and interior paint, per room, commercial. RSM 09 65 13."
+      },
+      {
+        "item": 13,
+        "group": "SIPR",
+        "desc": "Lockable wall-mount SIPR enclosure/rack with backboard and grounding bus bar - CNSSAM TEMPEST/01-13 compliant",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 25000,
+        "uniformat": "D50",
+        "notes": "RS Means FY24 CONUS: SIPR-capable wall rack enclosure, lockable, with grounding, TEMPEST compliant. RSM 27 11 13."
+      },
+      {
+        "item": 14,
+        "group": "SIPR",
+        "desc": "Fiber optic cable from telecom room to SIPR rack location - single-mode, conduit, termination",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 8000,
+        "uniformat": "D50",
+        "notes": "RS Means FY24 CONUS: Single-mode fiber in conduit, terminate both ends. RSM 27 13 23."
+      },
+      {
+        "item": 15,
+        "group": "SIPR",
+        "desc": "SIPR-capable work area outlets (WAOs) - 6 EA at SIPR workstations",
+        "qty": 6,
+        "unit": "EA",
+        "uc": 1000,
+        "uniformat": "D50",
+        "notes": "RS Means FY24 CONUS: Data outlet, quad, flush mounted, complete. RSM 27 15 43."
+      },
+      {
+        "item": 16,
+        "group": "SIPR",
+        "desc": "Conduit and cable management infrastructure for SIPR runs - dedicated conduit, cable tray, hardware",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 6000,
+        "uniformat": "D50",
+        "notes": "RS Means FY24 CONUS: Conduit and cable tray, SIPR zone separation, complete. RSM 26 05 33."
+      },
+      {
+        "item": 17,
+        "group": "Pathway",
+        "desc": "New door opening in existing wall - saw cut, structural header, threshold plate for vault access pathway",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 5000,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: Saw cut opening in CMU/concrete wall, structural header, complete. RSM 03 30 00."
+      },
+      {
+        "item": 18,
+        "group": "Pathway",
+        "desc": "New security-rated door/frame/hardware for vault access pathway between Bn Conference Room and S-2 vault",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 3500,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: HM door 3x7, frame, lever hardware, complete. RSM 08 11 13."
+      },
+      {
+        "item": 19,
+        "group": "Pathway",
+        "desc": "New partition walls to define pathway corridor between Bn Conference Room and S-2 vault",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 8000,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: GWB stud partition, 3-5/8-in metal stud, 10-ft height, complete. RSM 09 29 00."
+      },
+      {
+        "item": 20,
+        "group": "Pathway",
+        "desc": "Pathway finishes - VCT flooring, interior paint, base molding",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 2500,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: VCT and interior paint, corridor, commercial grade. RSM 09 65 13."
+      },
+      {
+        "item": 21,
+        "group": "Pathway",
+        "desc": "Fire alarm devices in new pathway/corridor - smoke detector and horn/strobe notification device per NFPA 72",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 2200,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: Smoke detector and notification appliance, addressable, complete. RSM 28 31 11."
+      },
+      {
+        "item": 22,
+        "group": "Pathway",
+        "desc": "Exit sign addition/relocation for new egress path through corridor per NFPA 101 / IBC Chapter 10",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 500,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: LED exit sign, wall/ceiling mount, complete. RSM 26 53 13."
+      },
+      {
+        "item": 23,
+        "group": "Offices",
+        "desc": "New gypsum stud partition walls for 6 private offices - built over existing work bench infrastructure per client direction",
+        "qty": 6,
+        "unit": "EA",
+        "uc": 10000,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: GWB partition, 3-5/8-in stud, 10-ft height, per office bay. RSM 09 29 00."
+      },
+      {
+        "item": 24,
+        "group": "Offices",
+        "desc": "New door/frame/hardware per office - 6 EA",
+        "qty": 6,
+        "unit": "EA",
+        "uc": 2500,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: HM door 3x7, frame, lever hardware, complete. RSM 08 11 13."
+      },
+      {
+        "item": 25,
+        "group": "Offices",
+        "desc": "Electrical - outlets, switches, and LED lighting per office, 6 EA",
+        "qty": 6,
+        "unit": "EA",
+        "uc": 3000,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: Branch circuit, 4 outlets + 2 switches + 2 LED fixtures per office. RSM 26 05 19."
+      },
+      {
+        "item": 26,
+        "group": "Offices",
+        "desc": "Emergency egress lighting per office - 6 EA per NFPA 101 / UFC 3-530-01",
+        "qty": 6,
+        "unit": "EA",
+        "uc": 600,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: Battery-backed egress light, wall mount, complete. RSM 26 53 16."
+      },
+      {
+        "item": 27,
+        "group": "Offices",
+        "desc": "Fire alarm devices in new office spaces - smoke detector and horn/strobe per NFPA 72, 6 EA",
+        "qty": 6,
+        "unit": "EA",
+        "uc": 1800,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: Smoke detector + notification appliance, addressable, per office. RSM 28 31 11."
+      },
+      {
+        "item": 28,
+        "group": "Offices",
+        "desc": "VCT flooring per office - 6 EA",
+        "qty": 6,
+        "unit": "EA",
+        "uc": 1500,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: VCT 12x12, commercial grade, including adhesive and base. RSM 09 65 13."
+      },
+      {
+        "item": 29,
+        "group": "Offices",
+        "desc": "Interior paint per office - 6 EA",
+        "qty": 6,
+        "unit": "EA",
+        "uc": 800,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: Interior latex paint, 2 coats, walls and ceiling per office. RSM 09 91 13."
+      },
+      {
+        "item": 30,
+        "group": "Offices",
+        "desc": "Exit sign addition/relocation for new office cluster egress configuration - 3 EA per NFPA 101 / IBC Ch. 10",
+        "qty": 3,
+        "unit": "EA",
+        "uc": 500,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: LED exit sign, wall/ceiling mount, complete. RSM 26 53 13."
+      },
+      {
+        "item": 31,
+        "group": "EOD Office",
+        "desc": "New gypsum stud partitions for EOD office space division",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 12000,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: GWB partition, 3-5/8-in stud, 10-ft height, complete. RSM 09 29 00."
+      },
+      {
+        "item": 32,
+        "group": "EOD Office",
+        "desc": "New door/frame/hardware for partitioned EOD spaces - 2 EA",
+        "qty": 2,
+        "unit": "EA",
+        "uc": 2500,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: HM door 3x7, frame, lever hardware, complete. RSM 08 11 13."
+      },
+      {
+        "item": 33,
+        "group": "EOD Office",
+        "desc": "Electrical modifications for partitioned EOD spaces - outlets, switches, lighting",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 5000,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: Branch circuit extension, 4 outlets + 2 switches + 2 LED fixtures. RSM 26 05 19."
+      },
+      {
+        "item": 34,
+        "group": "EOD Office",
+        "desc": "Emergency egress lighting for new EOD partitioned spaces per NFPA 101 / UFC 3-530-01",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 1200,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: Battery-backed egress light, wall mount, 2 EA. RSM 26 53 16."
+      },
+      {
+        "item": 35,
+        "group": "EOD Office",
+        "desc": "Fire alarm devices - smoke detectors and notification devices for new EOD partitioned spaces per NFPA 72",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 3600,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: Smoke detector + notification appliance, addressable, 2 EA. RSM 28 31 11."
+      },
+      {
+        "item": 36,
+        "group": "EOD Office",
+        "desc": "Finishes - VCT flooring and interior paint for EOD partitioned spaces",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 4500,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: VCT and 2-coat interior paint, commercial, LS per space. RSM 09 65 13."
+      },
+      {
+        "item": 37,
+        "group": "EOD Office",
+        "desc": "Exit sign relocation for new EOD partition egress configuration per NFPA 101 / IBC Chapter 10",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 500,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: LED exit sign, wall/ceiling mount, complete. RSM 26 53 13."
+      },
+      {
+        "item": 38,
+        "group": "Mail Room",
+        "desc": "New partition walls to establish Unit Mail Distribution Point per MCO 5110.1 / DoD 4525.6-M - programmed approx. 175 SF - CCN 61010 per UFC 3-701-01 - built over existing bench/shelf infrastructure per client direction",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 8000,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: GWB partition, 3-5/8-in stud, 10-ft height, LS for mail room enclosure. RSM 09 29 00."
+      },
+      {
+        "item": 39,
+        "group": "Mail Room",
+        "desc": "Security door/frame/lockset/closer for secure mail room",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 6000,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: HM door with security lockset, closer, and reinforced frame. RSM 08 11 13."
+      },
+      {
+        "item": 40,
+        "group": "Mail Room",
+        "desc": "Electrical - outlets and LED lighting in secure storage area",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 3500,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: Branch circuit, 2 outlets + 2 LED fixtures, complete. RSM 26 05 19."
+      },
+      {
+        "item": 41,
+        "group": "Mail Room",
+        "desc": "Fire alarm device - smoke detector for new enclosed mail room per NFPA 72",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 1200,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: Addressable smoke detector, complete. RSM 28 31 11."
+      },
+      {
+        "item": 42,
+        "group": "Mail Room",
+        "desc": "Finishes - VCT flooring and interior paint in secure mail room",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 2500,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS: VCT and 2-coat interior paint, commercial. RSM 09 65 13."
+      },
+      {
+        "item": 43,
+        "group": "HAZMAT",
+        "desc": "ACM re-inspection and survey confirmation - verify 2001 Bhate Environmental survey findings, full building pre-design per full HVAC duct and plumbing floor demolition scope",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 6000,
+        "uniformat": "F10",
+        "notes": "Bhate Environmental Associates 2001, NVLAP accredited PLM. Re-inspection required - 25-yr survey age and full system replacement scope per UFC 3-470-06."
+      },
+      {
+        "item": 44,
+        "group": "HAZMAT",
+        "desc": "Lead-Based Paint (LBP) survey - whole building pre-design per UFC 3-470-03 and EPA RRP Rule 40 CFR Part 745",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 4000,
+        "uniformat": "F10",
+        "notes": "RS Means FY24 CONUS: LBP inspection and risk assessment, commercial building, 13,484 SF. RSM 02 82 16."
+      },
+      {
+        "item": 45,
+        "group": "HAZMAT",
+        "desc": "Targeted ACM abatement - H2 rose 12x12 floor tile, 570 SF, Corridor 100/Rooms 8 and 23, 4% Chrysotile non-friable; full plumbing DWV replacement triggers floor demolition per OSHA 1926.1101",
+        "qty": 570,
+        "unit": "SF",
+        "uc": 32,
+        "uniformat": "F10",
+        "notes": "Bhate 2001 confirmed: H2, 570 SF, 4% Chrysotile, non-friable, good condition. Abatement triggered by confirmed floor demolition scope. RS Means FY24 CONUS RSM 02 82 13.13."
+      },
+      {
+        "item": 46,
+        "group": "HAZMAT",
+        "desc": "HAZMAT contractor mobilization, containment setup, negative air, air monitoring, and post-abatement clearance testing",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 8000,
+        "uniformat": "F10",
+        "notes": "RS Means FY24 CONUS: HAZMAT contractor mobilization, commercial abatement project, complete. RSM 02 82 13."
+      },
+      {
+        "item": 47,
+        "group": "HAZMAT",
+        "desc": "ACM contingency allowance - potential ceiling tile and duct insulation disturbance building-wide per full HVAC duct replacement scope; 13,484 SF per UFC 3-470-06; confirm or remove at design following re-inspection per Item 43",
+        "qty": 13484,
+        "unit": "SF",
+        "uc": 5,
+        "uniformat": "F10",
+        "notes": "Level 3 ROM allowance $5/SF per UFC 3-470-06 guidance. Included in hard scope. Confirm or remove at design following re-inspection per Item 43. RS Means FY24 CONUS: ACM ceiling/insulation abatement allowance."
+      },
+      {
+        "item": 48,
+        "group": "HVAC",
+        "desc": "Demo existing central chilled water plant - chiller C-1, AHU-1, BC-1 booster coil, pumps P-1 (2 EA), expansion tanks EWT-1/EWT-2, reheat coil RH-1, controls, and associated peripherals per as-built equipment schedule Sheet 5-20",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 22000,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS: Mechanical equipment demolition and disposal, central chilled water plant, 80-100 ton class. RSM 15 21 05."
+      },
+      {
+        "item": 49,
+        "group": "HVAC",
+        "desc": "Demo existing ductwork building-wide - all supply, return, and exhaust sheet metal duct, hangers, insulation, diffusers, and registers, 13,484 SF; original 1984 construction past ASHRAE 30-yr service life per mechanical evaluation 19 Mar 2026",
+        "qty": 13484,
+        "unit": "SF",
+        "uc": 3.5,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS: Sheet metal ductwork demolition, existing commercial building, per SF floor area. RSM 23 07 13."
+      },
+      {
+        "item": 50,
+        "group": "HVAC",
+        "desc": "Remove fuel oil tank OT-1 (240-gal above-ground steel) and all fuel oil supply and return piping - boiler B-1 system removal",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 8500,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS: Above-ground storage tank removal and disposal, 240-gal steel tank, includes transport. RSM 02 82 13."
+      },
+      {
+        "item": 51,
+        "group": "HVAC",
+        "desc": "Remove abandoned compressed air system - air compressor, distribution piping, and outlets building-wide",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 5500,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS: Compressed air system demolition, piping removal, existing building. RSM 15 21 05."
+      },
+      {
+        "item": 52,
+        "group": "HVAC",
+        "desc": "New air-cooled chilling unit, 86 ton (302 kW), pad-mounted exterior - new concrete equipment pad, refrigerant piping, electrical disconnect, startup and commissioning; replaces C-1 per as-built equipment schedule Sheet 5-20",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 108000,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS: Air-cooled chiller, 80-100 ton, complete with refrigerant charge, controls, and commissioning. RSM 23 64 16."
+      },
+      {
+        "item": 53,
+        "group": "HVAC",
+        "desc": "New air handling unit, floor-setting horizontal type, approximately 7,000 CFM - filters, coils, fan section, drain pan, and electrical connection; replaces AHU-1 per equipment schedule Sheet 5-20",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 52000,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS: Air handling unit, horizontal, 5,000-8,000 CFM range, complete. RSM 23 74 33."
+      },
+      {
+        "item": 54,
+        "group": "HVAC",
+        "desc": "New circulation pumps, centrifugal, 2 EA - pipe flanges, flexible connectors, isolation valves, motor starters, and electrical connections; replaces P-1 x2 per equipment schedule",
+        "qty": 2,
+        "unit": "EA",
+        "uc": 9500,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS: Centrifugal pump, base-mounted, 1.5-3 HP, complete with fittings and starters. RSM 23 21 13."
+      },
+      {
+        "item": 55,
+        "group": "HVAC",
+        "desc": "New booster coil unit, duct insertion type - electrical connection and duct reconnection; replaces BC-1 per equipment schedule Sheet 5-20",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 17500,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS: Duct insertion electric heating coil unit, commercial, complete. RSM 23 83 16."
+      },
+      {
+        "item": 56,
+        "group": "HVAC",
+        "desc": "New chilled water distribution piping, Type L copper, insulated, building-wide - main supply and return runs, branch lines, isolation valves, balance valves, and pressure testing; approximately 350 LF from piping diagram Sheet 10-20",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 24000,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS: Copper pipe, insulated, chilled water distribution, 2-in dia avg, 350 LF estimated. RSM 23 21 13.16."
+      },
+      {
+        "item": 57,
+        "group": "HVAC",
+        "desc": "New supply and return ductwork, diffusers, registers, and volume dampers building-wide - sheet metal fab, hangers, insulation, and all air distribution devices for 24 rooms per 1st floor duct plan Sheet 11-20; 13,484 SF",
+        "qty": 13484,
+        "unit": "SF",
+        "uc": 15,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS: HVAC ductwork system, supply and return, commercial, complete per SF floor area. RSM 23 31 13."
+      },
+      {
+        "item": 58,
+        "group": "HVAC",
+        "desc": "New power roof ventilators - replace RF-1 through RF-6 per as-built equipment schedule Sheet 5-20; 9 EA per field count confirmed",
+        "qty": 9,
+        "unit": "EA",
+        "uc": 5500,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS: Power roof ventilator, centrifugal, 1,000-15,000 CFM, complete. RSM 23 34 23."
+      },
+      {
+        "item": 59,
+        "group": "HVAC",
+        "desc": "New gravity roof ventilators - replace GV-1 and GF-2, 2 EA per as-built equipment schedule Sheet 5-20",
+        "qty": 2,
+        "unit": "EA",
+        "uc": 3200,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS: Gravity roof ventilator, 300-500 CFM, complete. RSM 23 34 16."
+      },
+      {
+        "item": 60,
+        "group": "HVAC",
+        "desc": "New exhaust fans, hanger-mounted centrifugal - replace EF-1, EF-2, EF-3, HF-1, HF-2, 5 EA per as-built equipment schedule Sheet 5-20",
+        "qty": 5,
+        "unit": "EA",
+        "uc": 2800,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS: Centrifugal hanger-mounted exhaust fan, commercial, complete. RSM 23 34 13."
+      },
+      {
+        "item": 61,
+        "group": "HVAC",
+        "desc": "DDC/BAS building automation controls - DDC for 24 zones per duct plan Sheet 11-20, central controller, thermostat per zone, wiring, and programming",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 30000,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS: DDC HVAC controls, commercial building, 24 zones complete. RSM 25 30 00."
+      },
+      {
+        "item": 62,
+        "group": "Plumbing",
+        "desc": "Demo existing cast iron sanitary DWV piping, floor drains, and cleanouts building-wide; original 1984 construction, 42 years old; per 1st floor piping plan Sheet 8-20 and drain piping isometric Sheet 9-20",
+        "qty": 13484,
+        "unit": "SF",
+        "uc": 5,
+        "uniformat": "D20",
+        "notes": "RS Means FY24 CONUS: Cast iron pipe demolition, DWV system, existing commercial building, per SF. RSM 02 41 19."
+      },
+      {
+        "item": 63,
+        "group": "Plumbing",
+        "desc": "New Schedule 40 PVC drain, waste, and vent (DWV) system building-wide - all fixture drains, soil stacks, vent stacks, and cleanouts per IPC 2021; from all fixture locations to first sanitary manhole outside building",
+        "qty": 13484,
+        "unit": "SF",
+        "uc": 10.5,
+        "uniformat": "D20",
+        "notes": "RS Means FY24 CONUS: PVC DWV system, commercial building, complete per SF floor area. RSM 22 11 16."
+      },
+      {
+        "item": 64,
+        "group": "Plumbing",
+        "desc": "Demo existing domestic water piping (cold water supply and domestic hot water distribution) building-wide; all branch piping serving restrooms, mech room, hose bibs, and service sink; per piping plan Sheet 8-20",
+        "qty": 13484,
+        "unit": "SF",
+        "uc": 3.5,
+        "uniformat": "D20",
+        "notes": "RS Means FY24 CONUS: Domestic water piping demolition, existing commercial building, per SF. RSM 02 41 19."
+      },
+      {
+        "item": 65,
+        "group": "Plumbing",
+        "desc": "New Type L copper cold water distribution system building-wide - water service entry through building to all fixture locations, isolation valves, pressure-reducing valves, and hose bibs",
+        "qty": 13484,
+        "unit": "SF",
+        "uc": 9,
+        "uniformat": "D20",
+        "notes": "RS Means FY24 CONUS: Copper domestic cold water distribution, commercial, per SF floor area. RSM 22 11 13."
+      },
+      {
+        "item": 66,
+        "group": "Plumbing",
+        "desc": "New building drain connection to sanitary sewer - remove and replace existing site sewer line, new PVC 6-inch SDR-35 from building exit to first manhole, excavation, backfill, and surface restoration",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 7500,
+        "uniformat": "D20",
+        "notes": "RS Means FY24 CONUS: PVC SDR-35 site sewer, 6-in dia, 50 LF estimated, includes excavation and backfill. RSM 33 31 13."
+      },
+      {
+        "item": 67,
+        "group": "Plumbing",
+        "desc": "New commercial electric water heater, 100-gallon - remove existing 2004 unit past service life, install new unit with supply connections, T&P relief valve, floor drain piping, and electrical connection",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 5200,
+        "uniformat": "D20",
+        "notes": "RS Means FY24 CONUS: Commercial electric water heater, 80-100 gal, furnished and installed complete. RSM 22 33 30."
+      },
+      {
+        "item": 68,
+        "group": "Plumbing",
+        "desc": "Full restroom fixture replacement, all restroom spaces (Rooms 108A, 108B, 110A, 110B) - water closets 4 EA, urinals 3 EA, lavatories 3 EA, shower sets 2 EA, service sink 1 EA; per plumbing fixture schedule Sheet 7-20",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 16500,
+        "uniformat": "D20",
+        "notes": "RS Means FY24 CONUS: Fixture replacement package per schedule Sheet 7-20. WC $1,250 EA, urinal $1,000 EA, lavatory $900 EA, shower $1,900 EA, service sink $1,100 EA. RSM 22 41 13."
+      },
+      {
+        "item": 69,
+        "group": "Plumbing",
+        "desc": "Restroom ceramic tile, floor and wall, all restroom spaces - floor tile 500 SF and wall tile 1,000 SF (wet areas to 8 ft) per interior finish schedule Sheet 6-20 of as-built drawings",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 25000,
+        "uniformat": "D20",
+        "notes": "RS Means FY24 CONUS: Ceramic tile floor $18/SF (500 SF = $9,000) and wall $16/SF (1,000 SF = $16,000). RSM 09 30 13."
+      },
+      {
+        "item": 70,
+        "group": "Plumbing",
+        "desc": "Restroom accessories replacement - toilet paper holders, towel dispensers, mirrors, soap dispensers, and grab bars, all restroom spaces",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 5200,
+        "uniformat": "D20",
+        "notes": "RS Means FY24 CONUS: Restroom accessories, commercial grade, 6 spaces x $867 avg. RSM 10 28 16."
+      },
+      {
+        "item": 71,
+        "group": "Plumbing",
+        "desc": "Restroom LED lighting replacement - all restroom spaces, 15 fixtures, including conduit, wiring, switches, and circuit connections",
+        "qty": 15,
+        "unit": "EA",
+        "uc": 435,
+        "uniformat": "D50",
+        "notes": "RS Means FY24 CONUS: LED recessed fixture with box, commercial, complete with wiring. RSM 26 51 00."
+      },
+      {
+        "item": 72,
+        "group": "Doors",
+        "desc": "Replace overhead sectional steel roll-up doors building-wide - remove and replace existing doors past service life per David Brennan mechanical evaluation 19 Mar 2026; 5 EA per as-built floor plan Sheet 7-36 (Rooms 112, 114, 116, 117, 118 north face)",
+        "qty": 5,
+        "unit": "EA",
+        "uc": 5500,
+        "uniformat": "B20",
+        "notes": "RS Means FY24 CONUS: Overhead sectional steel door, commercial, 10x10 opening, complete with hardware and motor operator. RSM 08 33 23."
+      },
+      {
+        "item": 73,
+        "group": "Doors",
+        "desc": "Replace air curtains at building entry doors - remove and replace non-functioning air curtains per David Brennan mechanical evaluation 19 Mar 2026; 2 EA (end of each hallway, confirmed)",
+        "qty": 2,
+        "unit": "EA",
+        "uc": 2900,
+        "uniformat": "B20",
+        "notes": "RS Means FY24 CONUS: Commercial air curtain, 36-in width, heated, complete with electrical connection. RSM 23 34 43."
+      }
+    ]
+  },
+  "3237": {
+    "sections": [
+      {
+        "before_item_count": 0,
+        "title": "1.  STORAGE RECONFIGURATION - Remove/Replace Floor-to-Ceiling Wire Mesh Cage Partitions, Room 101"
+      },
+      {
+        "before_item_count": 2,
+        "title": "2.  TELECOMMUNICATIONS ROOM - INTERIOR CONSTRUCTION - New TR per UFC 3-580-01 (21 Nov 2024) Para 2-3.1.2.2 & MCIPAC G-6 Policy Ltr 03-2024"
+      },
+      {
+        "before_item_count": 5,
+        "title": "3.  TELECOMMUNICATIONS ROOM - HVAC - Dedicated A/C per UFC 3-580-01 Para 2-3.1.3.3 & 2-3.1.3.4"
+      },
+      {
+        "before_item_count": 6,
+        "title": "4.  TELECOMMUNICATIONS ROOM - ELECTRICAL - Dedicated Panel and Wiring per UFC 3-580-01 Para 2-3.1.3.2"
+      },
+      {
+        "before_item_count": 9,
+        "title": "5.  COMMUNICATIONS INFRASTRUCTURE MODERNIZATION - Full Facility Scope per MCIPAC G-6 Policy Ltr 03-2024 & UFC 3-580-01 (21 Nov 2024)"
+      },
+      {
+        "before_item_count": 10,
+        "title": "6.  HAZMAT - ACM MASTIC ABATEMENT - Bhate Environmental Survey 11/29/2001 (NVLAP accredited, Lab: Analytica Solutions)"
+      }
+    ],
+    "items": [
+      {
+        "item": 1,
+        "group": "STORAGE",
+        "desc": "Remove existing floor-to-ceiling wire mesh cage partitions, Room 101 (full bay); includes disconnect, demo, and haul-off",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 5000,
+        "uniformat": "C10",
+        "notes": "YELLOW - cage LF qty and layout unconfirmed; pending Markon floor plan field verification; UFC 3-580-01"
+      },
+      {
+        "item": 2,
+        "group": "STORAGE",
+        "desc": "Install new floor-to-ceiling wire mesh cage partitions, Room 101; 3 tenant zones: CLB-4 / HQ 4th MAR REGT / UDP (4th Marines); includes framing, hardware, and seismic anchoring",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 25000,
+        "uniformat": "C10",
+        "notes": "YELLOW - zone dimensions and total LF unconfirmed; pending unit layout confirmation and design"
+      },
+      {
+        "item": 3,
+        "group": "TR-ARCH",
+        "desc": "Construct new TR interior partition walls; light gauge metal framing, 5/8 in Type X gypsum board, fire-rated; room sized at approx 1.1 pct of 19,304 SF served area per UFC 3-580-01 Para 2-3.1.2.2(c); no suspended ceiling per Para 2-3.1.2.3",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 12000,
+        "uniformat": "C10",
+        "notes": "UFC 3-580-01 Para 2-3.1.2.2 & 2-3.1.2.3; NFPA 101; min room size 10 ft-6 in x 9 ft for bldgs >5,000 SF"
+      },
+      {
+        "item": 4,
+        "group": "TR-ARCH",
+        "desc": "Install 3/4 in A-C plywood backboards (fire-retardant treated); cover three walls; 8 ft high; grade-A surface exposed; per MCIPAC G-6 Policy Ltr 03-2024 Sec 4(c)(4)",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 3600,
+        "uniformat": "C10",
+        "notes": "MCIPAC G-6 Policy Ltr 03-2024 Sec 4(c)(4); UFC 3-580-01"
+      },
+      {
+        "item": 5,
+        "group": "TR-ARCH",
+        "desc": "Install fire-rated door (min 36 in x 80 in); outswing; combination type lock; holds open unassisted; no threshold; per UFC 3-580-01 Para 2-3.1.2.4 and MCIPAC G-6 Policy Ltr 03-2024 Sec 4(c)(3)",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 2500,
+        "uniformat": "C10",
+        "notes": "UFC 3-580-01 Para 2-3.1.2.4; MCIPAC G-6 Policy Ltr 03-2024 Sec 4(c)(3); NFPA 101"
+      },
+      {
+        "item": 6,
+        "group": "TR-HVAC",
+        "desc": "Install dedicated mini-split A/C unit (1.5-ton); independent 24/7/365 thermostat; NOT on building time clock or setback; positive atmospheric pressure; space and power capacity for one additional identical unit per Para 2-3.1.3.4(d) (load calculated at <1 ton); includes refrigerant line, condensate, electrical connection",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 4500,
+        "uniformat": "D30",
+        "notes": "UFC 3-580-01 Para 2-3.1.3.3 & 2-3.1.3.4(d); TIA-569; ASHRAE Class B; UFC 3-410-01"
+      },
+      {
+        "item": 7,
+        "group": "TR-ELEC",
+        "desc": "Install dedicated electrical branch circuit panel board; 100A min bus; 120/208V 3-phase; 24-space; feed all TR loads from dedicated panel per UFC 3-580-01 Para 2-3.1.3.2; includes panel, breakers, grounding",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 3500,
+        "uniformat": "D50",
+        "notes": "UFC 3-580-01 Para 2-3.1.3.2; MCIPAC G-6 Policy Ltr 03-2024 Sec 4(c)(6)(a); NEC"
+      },
+      {
+        "item": 8,
+        "group": "TR-ELEC",
+        "desc": "Install 125V 20A duplex convenience receptacles at 6 ft on-center intervals around TR perimeter walls; twist-lock type receptacles fed from dedicated circuits at each rack/cabinet per UFC 3-580-01 Para 2-3.1.3.2; includes wiring and conduit",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 2000,
+        "uniformat": "D50",
+        "notes": "UFC 3-580-01 Para 2-3.1.3.2; MCIPAC G-6 Policy Ltr 03-2024 Sec 4(c)(6)(c)(d); NEC"
+      },
+      {
+        "item": 9,
+        "group": "TR-ELEC",
+        "desc": "Install overhead cable tray system (slotted bottom); sized for 50 pct fill ratio; extend along three walls above equipment cabinets per MCIPAC G-6 Policy Ltr 03-2024 Sec 4(c)(8)(a); includes waterfalls, supports, bonding",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 1500,
+        "uniformat": "D50",
+        "notes": "MCIPAC G-6 Policy Ltr 03-2024 Sec 4(c)(8)(a); UFC 3-580-01; TIA-569"
+      },
+      {
+        "item": 10,
+        "group": "COMM",
+        "desc": "Communications infrastructure modernization - full facility scope: (1) remove and dispose non-EMT conduit (full facility); (2) install EMT conduit; (3) Cat 6 UTP NIPR (green) and SIPR (red in EMT) cabling; (4) WAO installation (min 2-port per location; 450mm AFF NIPR / 950mm AFF SIPR); (5) new enclosed mesh TR cabinet seismic Zone 4 anchored (4x 1/2 in bolts); (6) patch panels + cable management (WAOs + 25 pct expansion); (7) relocate existing rack from open admin office to new TR; (8) cable testing and test report. Comm engineer preliminary ROM.",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 100000,
+        "uniformat": "D50",
+        "notes": "YELLOW - comm engineer ROM $100,000 based on available info; additional site survey required (unit items impeded TR access during initial survey); MCIPAC G-6 Policy Ltr 03-2024 Sec 4(b)(c)(f)(g); UFC 3-580-01"
+      },
+      {
+        "item": 11,
+        "group": "HAZMAT",
+        "desc": "ACM abatement mobilization, containment setup, and demobilization; OSHA 29 CFR 1926.1101 compliant; licensed OCONUS contractor",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 5000,
+        "uniformat": "F10",
+        "notes": "OSHA 1926.1101; 40 CFR Part 61 NESHAP; abatement required prior to slab penetrations (seismic anchors, TR construction)"
+      },
+      {
+        "item": 12,
+        "group": "HAZMAT",
+        "desc": "ACM mastic abatement (H2 - brown floor tile mastic, 5 pct Chrysotile); Room 101 (main warehouse bay) and interior hallway; floor penetrations for cage seismic anchors and TR construction trigger OSHA 1926.1101 disturbance threshold.",
+        "qty": 5590,
+        "unit": "SF",
+        "uc": 8,
+        "uniformat": "F10",
+        "notes": "YELLOW - PWD ENV confirmation pending: flooring in Room 101/hallway may have been replaced since 2001 Bhate survey; if mastic removed in prior replacement, scope reduces; Bhate Environmental Survey 11/29/2001, Sample H2, PA Form confirmed"
+      },
+      {
+        "item": 13,
+        "group": "HAZMAT",
+        "desc": "ACM waste disposal - licensed OCONUS facility; bagged and labeled per OSHA 1926.1101; manifest documentation",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 3000,
+        "uniformat": "F10",
+        "notes": "OSHA 1926.1101; 40 CFR Part 61 NESHAP; OCONUS disposal surcharge included in unit rate"
+      },
+      {
+        "item": 14,
+        "group": "HAZMAT",
+        "desc": "Industrial hygienist air monitoring - pre-abatement, continuous during abatement, post-abatement; OSHA personal air sampling",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 4000,
+        "uniformat": "F10",
+        "notes": "OSHA 1926.1101; standard OCONUS IH monitoring package"
+      },
+      {
+        "item": 15,
+        "group": "HAZMAT",
+        "desc": "Clearance testing and documentation; final air samples; written clearance report; all required regulatory submittals",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 2000,
+        "uniformat": "F10",
+        "notes": "OSHA 1926.1101; EPA NESHAP; 40 CFR Part 61"
+      }
+    ]
+  },
+  "3270": {
+    "sections": [
+      {
+        "before_item_count": 0,
+        "title": "1.  MECHANICAL - HVAC ACP SYSTEM REPLACEMENT - 7 Outdoor Units + 24 Indoor Fan Coils + Infrastructure"
+      },
+      {
+        "before_item_count": 15,
+        "title": "2.  MECHANICAL - DOAS FRESH AIR SYSTEMS - 4 Units + Ductwork Evaluation"
+      },
+      {
+        "before_item_count": 20,
+        "title": "3.  MECHANICAL - EXHAUST SYSTEMS - 22 General Fans + 10 Hose Reels + Welding Exhaust Restore + RM114 Removal"
+      },
+      {
+        "before_item_count": 24,
+        "title": "4.  MECHANICAL - BATTERY ROOM - RM102 Ventilation and Conditioning Upgrade"
+      },
+      {
+        "before_item_count": 25,
+        "title": "5.  MECHANICAL - COMPRESSED AIR - RM119 System Inspection and Repair"
+      },
+      {
+        "before_item_count": 26,
+        "title": "6.  PLUMBING - Safety Stations and Fixtures"
+      },
+      {
+        "before_item_count": 28,
+        "title": "7.  EXTERIOR DOORS - Roll-Up Door Inspection and Repair"
+      },
+      {
+        "before_item_count": 29,
+        "title": "8.  ELECTRICAL - LIGHTING REPLACEMENT - 94 Confirmed Fixtures + Motion Sensors"
+      },
+      {
+        "before_item_count": 34,
+        "title": "9.  COMMUNICATIONS - Cat6 NIPR Infrastructure + MNS - 70 Drops + Both TRs"
+      },
+      {
+        "before_item_count": 38,
+        "title": "10.  ARCHITECTURAL - Interior Repairs and Remediation"
+      }
+    ],
+    "items": [
+      {
+        "item": 1,
+        "group": "Mech",
+        "desc": "Replace VRF outdoor condensing unit ACP-1 | 50.2 KW / 14.3 tons | furnished and installed complete with refrigerant line connections, electrical connections, startup and commissioning",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 23500,
+        "uniformat": "D30",
+        "notes": "RS Means D3030; large commercial VRF condensing unit; UFC 3-410-01; ACP capacity confirmed 07 Mar 2026"
+      },
+      {
+        "item": 2,
+        "group": "Mech",
+        "desc": "Replace VRF outdoor condensing unit ACP-2 | 26.2 KW / 7.4 tons | furnished and installed complete",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 14500,
+        "uniformat": "D30",
+        "notes": "RS Means D3030; UFC 3-410-01"
+      },
+      {
+        "item": 3,
+        "group": "Mech",
+        "desc": "Replace VRF outdoor condensing unit ACP-3 | 40.0 KW / 11.4 tons | furnished and installed complete",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 19500,
+        "uniformat": "D30",
+        "notes": "RS Means D3030; UFC 3-410-01"
+      },
+      {
+        "item": 4,
+        "group": "Mech",
+        "desc": "Replace VRF outdoor condensing unit ACP-4 | 16.0 KW / 4.5 tons | furnished and installed complete",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 10000,
+        "uniformat": "D30",
+        "notes": "RS Means D3030; UFC 3-410-01"
+      },
+      {
+        "item": 5,
+        "group": "Mech",
+        "desc": "Replace VRF outdoor condensing unit ACP-5 | 40.0 KW / 11.4 tons | furnished and installed complete",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 19500,
+        "uniformat": "D30",
+        "notes": "RS Means D3030; UFC 3-410-01"
+      },
+      {
+        "item": 6,
+        "group": "Mech",
+        "desc": "Replace VRF outdoor condensing unit ACP-6 | 14.0 KW / 4.0 tons | furnished and installed complete",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 9500,
+        "uniformat": "D30",
+        "notes": "RS Means D3030; UFC 3-410-01"
+      },
+      {
+        "item": 7,
+        "group": "Mech",
+        "desc": "Replace mini-split condensing unit ACP-7 | 2.2 KW / 0.6 tons | standalone; furnished and installed complete with startup",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 3500,
+        "uniformat": "D30",
+        "notes": "RS Means D3030; UFC 3-410-01"
+      },
+      {
+        "item": 8,
+        "group": "Mech",
+        "desc": "Replace indoor VRF fan coil units ACP-3 zone | 14 EA ducted cassette type | mixed 2.2/2.0/2.8 KW | furnished and installed complete",
+        "qty": 14,
+        "unit": "EA",
+        "uc": 2800,
+        "uniformat": "D30",
+        "notes": "RS Means D3050; qty and capacity confirmed ACP schedule 07 Mar 2026"
+      },
+      {
+        "item": 9,
+        "group": "Mech",
+        "desc": "Replace indoor VRF fan coil units ACP-4 zone | 3 EA ducted cassette type | mixed 3.6/3.6/1.5 KW | furnished and installed complete",
+        "qty": 3,
+        "unit": "EA",
+        "uc": 2800,
+        "uniformat": "D30",
+        "notes": "RS Means D3050; qty and capacity confirmed ACP schedule 07 Mar 2026"
+      },
+      {
+        "item": 10,
+        "group": "Mech",
+        "desc": "Replace indoor VRF fan coil units ACP-5 zone | 4 EA ducted cassette type | mixed 4.5/4.4/6.0/11.2 KW | furnished and installed complete",
+        "qty": 4,
+        "unit": "EA",
+        "uc": 2800,
+        "uniformat": "D30",
+        "notes": "RS Means D3050; qty and capacity confirmed ACP schedule 07 Mar 2026"
+      },
+      {
+        "item": 11,
+        "group": "Mech",
+        "desc": "Replace indoor VRF fan coil units ACP-6 zone | 3 EA ducted cassette type | mixed 2.8/2.8/1.45 KW | furnished and installed complete",
+        "qty": 3,
+        "unit": "EA",
+        "uc": 2800,
+        "uniformat": "D30",
+        "notes": "RS Means D3050; qty and capacity confirmed ACP schedule 07 Mar 2026"
+      },
+      {
+        "item": 12,
+        "group": "Mech",
+        "desc": "Refrigerant piping | line sets | insulation | fittings | pressure testing | all 7 ACP systems complete",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 20000,
+        "uniformat": "D30",
+        "notes": "UFC 3-410-01; includes all branch piping to indoor fan coil units"
+      },
+      {
+        "item": 13,
+        "group": "Mech",
+        "desc": "Electrical disconnects and dedicated circuit connections for 7 outdoor ACP condensing units",
+        "qty": 7,
+        "unit": "EA",
+        "uc": 1800,
+        "uniformat": "D30",
+        "notes": "UFC 3-520-01; one disconnect and connection set per outdoor ACP unit"
+      },
+      {
+        "item": 14,
+        "group": "Mech",
+        "desc": "Redesign air pull infrastructure | supply/return vents | fan power boxes | door louvers | 1F and 2F complete",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 18000,
+        "uniformat": "D30",
+        "notes": "UFC 3-410-01; site survey confirms air pull redesign required throughout building"
+      },
+      {
+        "item": 15,
+        "group": "Mech",
+        "desc": "Install new split unit HVAC | 1F and 2F hallways | 2 EA | capacity per designer load calculation",
+        "qty": 2,
+        "unit": "EA",
+        "uc": 12000,
+        "uniformat": "D30",
+        "notes": "RS Means D3030; UFC 3-410-01; new hallway coverage both floors"
+      },
+      {
+        "item": 16,
+        "group": "Mech",
+        "desc": "Replace ACP-1 100% outside air packaged unit | RM123 Mechanical Room 3 | serves main shop areas | furnished and installed complete with refrigerant lines, electrical, controls, and startup",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 38000,
+        "uniformat": "D30",
+        "notes": "RS Means D3060; 100% OA packaged unit; UFC 3-410-01; ASHRAE 62.1; AS-BUILT mech drawings confirmed"
+      },
+      {
+        "item": 17,
+        "group": "Mech",
+        "desc": "Replace ACP-4-3 outside air processing unit | RM104 Office 1 | furnished and installed complete",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 16000,
+        "uniformat": "D30",
+        "notes": "RS Means D3060; outside air processing unit; UFC 3-410-01; location confirmed AS-BUILT mech drawings"
+      },
+      {
+        "item": 18,
+        "group": "Mech",
+        "desc": "Replace ACP-5-4 outside air processing unit | RM207 Class Room | furnished and installed complete",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 16000,
+        "uniformat": "D30",
+        "notes": "RS Means D3060; UFC 3-410-01; location confirmed AS-BUILT mech drawings"
+      },
+      {
+        "item": 19,
+        "group": "Mech",
+        "desc": "Replace ACP-6-3 outside air processing unit | RM116 Office 2 | furnished and installed complete",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 16000,
+        "uniformat": "D30",
+        "notes": "RS Means D3060; UFC 3-410-01; location confirmed AS-BUILT mech drawings"
+      },
+      {
+        "item": 20,
+        "group": "Mech",
+        "desc": "Existing supply ductwork evaluation and replacement as required | all 4 DOAS systems | designer to confirm reuse vs. replacement per field assessment",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 18000,
+        "uniformat": "D30",
+        "notes": "UFC 3-410-01; ASHRAE 62.1; ductwork shown in AS-BUILT drawings; reuse determination by designer"
+      },
+      {
+        "item": 21,
+        "group": "Mech",
+        "desc": "Replace general exhaust fans building-wide | 22 EA | FE-1,7,9,10,11,15,16,17 (restroom/shower/janitor) | FE-2,3,4 (storage/recycle) | FE-5,6,12 (shop) | FE-18,19,20,21,FS-1 (mechanical/battery/boiler) | FE-22,33,34 (bay/roof) | furnished and installed complete | designer evaluates duct reuse per room",
+        "qty": 22,
+        "unit": "EA",
+        "uc": 3000,
+        "uniformat": "D30",
+        "notes": "RS Means D3090; UFC 3-410-01; 2010 vintage approaching EOL; quantities confirmed from mechanical equipment schedule FE-1 through FS-1"
+      },
+      {
+        "item": 22,
+        "group": "Mech",
+        "desc": "Replace vehicle exhaust hose reel assemblies | 10 EA total | FE-23 through FE-28 in RM105 Maintenance Bay (6 EA) | FE-29 through FE-32 in RM113 Maintenance Bay (4 EA) | fan, reel assembly, and branch duct replacement complete | main exhaust header evaluation included",
+        "qty": 10,
+        "unit": "EA",
+        "uc": 5000,
+        "uniformat": "D30",
+        "notes": "RS Means D3090; vehicle exhaust capture systems; UFC 3-410-01; quantities and locations confirmed from AS-BUILT mechanical drawings"
+      },
+      {
+        "item": 23,
+        "group": "Mech",
+        "desc": "Full removal of abandoned dust collection system RM114 Wood Shop | exterior DC unit | wall penetration | all internal ductwork | 4 equipment connection points (miter saw, band saw, table saw, radial saw/sander) | debris disposal complete",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 8500,
+        "uniformat": "D30",
+        "notes": "RS Means D3090 demolition; UFC 3-410-01; full system extent confirmed from AS-BUILT mechanical drawings"
+      },
+      {
+        "item": 24,
+        "group": "Mech",
+        "desc": "Repair and restore RM117 Welding Shop exhaust system | replace exhaust fans FE-13 and FE-14 | replace roof ventilator FA-1 | repair/replace welding exhaust hood and all associated ductwork | system originally designed for welding operations and has fallen into disrepair",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 14000,
+        "uniformat": "D30",
+        "notes": "RS Means D3090; UFC 3-410-01; system fully shown in AS-BUILT drawings as active design; confirmed repair required 19 Mar 2026"
+      },
+      {
+        "item": 25,
+        "group": "Mech",
+        "desc": "Battery room RM102 ventilation and conditioning upgrade | extend multizone split system to meet temperature requirements | upgrade existing wall exhaust fan FE-20 to code-compliant interlocked exhaust for hydrogen gas control | no existing hood or ductwork present",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 12000,
+        "uniformat": "D30",
+        "notes": "RS Means D3090/D5030; OSHA 1910.178(g); UFC 3-520-01; existing FE-20 wall propeller fan confirmed from AS-BUILT drawings; no duct or hood present"
+      },
+      {
+        "item": 26,
+        "group": "Mech",
+        "desc": "Compressed air system inspection, pressure testing, and repair as necessary | COM-1 compressor and air receiver in RM119 Mechanical Room 1 | full distribution loop through RM105, RM113, and shops RM101-104 | column-mounted air outlet drops throughout ",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 8500,
+        "uniformat": "D30",
+        "notes": "RS Means D3090; system extent and layout confirmed from AS-BUILT compressed air plan drawings; repair as necessary"
+      },
+      {
+        "item": 27,
+        "group": "Plmb",
+        "desc": "Replace emergency eyewash and shower stations building-wide | replace 4 EA E-2 eyewash stations (2x RM102 Battery Room, 2x RM105 Maintenance Bay) | replace 1 EA E-1 combo shower/eyewash in RM102 | add 2 emergency shower stations at RM105 locations currently equipped with eyewash only | all per ANSI Z358.1 distance requirements",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 16000,
+        "uniformat": "D20",
+        "notes": "RS Means D2010; ANSI Z358.1; UFC 3-420-01; fixture locations and types confirmed from AS-BUILT plumbing drawings"
+      },
+      {
+        "item": 28,
+        "group": "Plmb",
+        "desc": "Replace 2F electric water cooler | RM214 corridor | EW-1 fixture tag | furnished and installed complete",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 2800,
+        "uniformat": "D20",
+        "notes": "RS Means D2020; UFC 3-420-01; fixture location confirmed from AS-BUILT plumbing drawings"
+      },
+      {
+        "item": 29,
+        "group": "Arch",
+        "desc": "Inspect and repair overhead roll-up doors | 22 EA total | RM105 (6 front, 6 rear) | RM113 (3 front, 3 rear) | wing rooms 101-104 (1 EA each, 4 total) | check springs, cables, operators, seals, and tracks | repair as necessary | all 2010 vintage",
+        "qty": 22,
+        "unit": "EA",
+        "uc": 1000,
+        "uniformat": "B20",
+        "notes": "RS Means G2050; 2010 vintage exterior vehicle bay doors; quantity and locations confirmed from AS-BUILT drawings; UNIFORMAT B2030 Exterior Doors"
+      },
+      {
+        "item": 30,
+        "group": "Elect",
+        "desc": "Replace high bay fixtures | F-8-322-PH26 (4 EA pipe pendant) | F-11-321-PH26 (2 EA wall) | F-16-321-PH26 (15 EA recessed) | F-16-322-PH26 (1 EA recessed) | L-2-J13-16 (18 EA recessed) | L-0-J13-10 (2 EA pendant) | F-20-ST1FRF22P-C (2 EA recessed) | F-22-SHI-FBC20-C (18 EA wall) | 62 EA total | furnished and installed",
+        "qty": 62,
+        "unit": "EA",
+        "uc": 650,
+        "uniformat": "D50",
+        "notes": "RS Means D5020; UFC 3-530-01; fixture schedule confirmed 05 Mar 2026"
+      },
+      {
+        "item": 31,
+        "group": "Elect",
+        "desc": "Replace 400W metal halide high bay fixtures SP3-HSR1M-400BH26 | ceiling mounted | 30 EA | lift and rigging required | furnished and installed",
+        "qty": 30,
+        "unit": "EA",
+        "uc": 1800,
+        "uniformat": "D50",
+        "notes": "RS Means D5020; UFC 3-530-01; fixture schedule confirmed 05 Mar 2026"
+      },
+      {
+        "item": 32,
+        "group": "Elect",
+        "desc": "Replace 400W metal halide fixtures SP-2 HSR1M-400BH26 with integrated optical sensors | 2 EA | coordinate with fire detection system prior to execution",
+        "qty": 2,
+        "unit": "EA",
+        "uc": 3200,
+        "uniformat": "D50",
+        "notes": "UFC 3-530-01; NFPA 72; fire detection system coordination required before execution"
+      },
+      {
+        "item": 33,
+        "group": "Elect",
+        "desc": "Replace motion sensor lighting fixtures | qty and fixture type per full 1F and 2F lighting survey | includes wiring and switch leg modifications",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 14000,
+        "uniformat": "D50",
+        "notes": "RS Means D5020; UFC 3-530-01; full lighting survey to be conducted during design phase"
+      },
+      {
+        "item": 34,
+        "group": "Elect",
+        "desc": "Electrical panel work | circuit modifications | branch wiring associated with fixture replacement throughout 1F and 2F",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 10000,
+        "uniformat": "D50",
+        "notes": "UFC 3-520-01; includes panel schedule updates and circuit documentation"
+      },
+      {
+        "item": 35,
+        "group": "Comm",
+        "desc": "Remove existing Cat5 and Cat3 cabling building-wide | 1F and 2F | includes J-boxes | patch panels | abandoned cable | complete",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 7500,
+        "uniformat": "D50",
+        "notes": "UFC 3-580-01; building-wide removal required prior to new Cat6 installation"
+      },
+      {
+        "item": 36,
+        "group": "Comm",
+        "desc": "Install Cat6 structured cabling infrastructure | 70 NIPR drops total | 40 EA CLB-4 (by room per unit-provided requirements 18 Mar 2026) | 30 EA 4th Marine Regiment (opposite side of building) | horizontal runs to 1F TR and 2F TR | Cat6 cable | EMT conduit | J-boxes | WAOs | terminations and labeling | both TRs complete",
+        "qty": 70,
+        "unit": "EA",
+        "uc": 210,
+        "uniformat": "D50",
+        "notes": "RS Means D5030; UFC 3-580-01; TIA-568; NIPR requirements confirmed by unit 18 Mar 2026"
+      },
+      {
+        "item": 37,
+        "group": "Comm",
+        "desc": "TR infrastructure upgrade | replace patch panel assemblies, switching hubs, and 110-blocks in both 1F TR and 2F TR | rack work | labeling | testing complete | both TRs sized to support 70-drop Cat6 infrastructure",
+        "qty": 2,
+        "unit": "EA",
+        "uc": 8500,
+        "uniformat": "D50",
+        "notes": "RS Means D5030; UFC 3-580-01; TR rack infrastructure and port density confirmed from AS-BUILT COMM drawings TR elevation details; both TRs accessed 14 Mar 2026"
+      },
+      {
+        "item": 38,
+        "group": "Comm",
+        "desc": "Install MNS junction box and Mass Notification System infrastructure building-wide",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 22000,
+        "uniformat": "D50",
+        "notes": "RS Means D5030; UFC 3-580-01; MNS scope confirmed as required"
+      },
+      {
+        "item": 39,
+        "group": "Arch",
+        "desc": "Replace mold and mildew damaged ceiling tile | building-wide assessment | replacement as required",
+        "qty": 2500,
+        "unit": "SF",
+        "uc": 7,
+        "uniformat": "C30",
+        "notes": "RS Means C3020; UFC 3-410-01; documented mold/mildew deficiency confirmed site survey"
+      },
+      {
+        "item": 40,
+        "group": "Arch",
+        "desc": "Repair gypsum and concrete wall damage throughout building | patch and repair | painted finish to match",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 20000,
+        "uniformat": "C10",
+        "notes": "RS Means C1020; documented deficiency confirmed site survey"
+      },
+      {
+        "item": 41,
+        "group": "Arch",
+        "desc": "Resecure anchor wire cables to exterior HVAC units | all units | hardware replacement as needed",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 8000,
+        "uniformat": "C10",
+        "notes": "RS Means G2090; exterior ACP unit anchor wire cable deficiency confirmed site survey"
+      },
+      {
+        "item": 42,
+        "group": "Arch",
+        "desc": "Deep clean all restrooms | mold and mildew remediation | surfaces, fixtures, and drain areas complete",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 15000,
+        "uniformat": "C10",
+        "notes": "RS Means Z0040; documented mold/mildew remediation requirement confirmed site survey"
+      }
+    ]
+  },
+  "3314": {
+    "sections": [
+      {
+        "before_item_count": 0,
+        "title": "1.  HVAC: BUILDING-WIDE DIFFUSERS AND CEILING RESTORATION"
+      },
+      {
+        "before_item_count": 2,
+        "title": "2.  HVAC: OFFICE DUCT MODIFICATIONS (ROOMS 105/106/107 CLUSTER)"
+      },
+      {
+        "before_item_count": 3,
+        "title": "3.  HVAC: EXHAUST FAN REPLACEMENT"
+      },
+      {
+        "before_item_count": 6,
+        "title": "4.  HVAC: SYSTEM TEST, ADJUST, AND BALANCE (TAB)"
+      },
+      {
+        "before_item_count": 7,
+        "title": "5.  HVAC: DUTY GUARD ROOM SYSTEMS (ROOMS 102 AND 103)"
+      },
+      {
+        "before_item_count": 11,
+        "title": "6.  MASS NOTIFICATION SYSTEM"
+      },
+      {
+        "before_item_count": 12,
+        "title": "7.  VAULT AND SECRET STORAGE CONVERSION"
+      },
+      {
+        "before_item_count": 18,
+        "title": "8.  HVAC AND PLUMBING: AHU AND MECHANICAL ROOM REPLACEMENT, MECHANICAL ROOM 115"
+      }
+    ],
+    "items": [
+      {
+        "item": 1,
+        "group": "G1-HVAC DIFFUSERS",
+        "desc": "Replace supply and return diffusers building-wide, type C2 ceiling diffuser (FL1: 22 EA, FL2: 56 EA, building total 78 EA)",
+        "qty": 78,
+        "unit": "EA",
+        "uc": 425,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS; ceiling diffuser supply/return R&R, parametric; UFC 3-410-01"
+      },
+      {
+        "item": 2,
+        "group": "G1-HVAC DIFFUSERS",
+        "desc": "Patch ceiling at diffuser locations, building-wide (78 locations); restore to match adjacent surfaces",
+        "qty": 78,
+        "unit": "EA",
+        "uc": 150,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS; ceiling patch per diffuser location, parametric"
+      },
+      {
+        "item": 3,
+        "group": "G2-OFFICE DUCT MODS",
+        "desc": "Supply and return duct modifications to offices converted from storage, Rooms 105/106/107 cluster - install new branch ducts and diffusers, remove old exhaust fans from converted spaces",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 12000,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS; HVAC duct branch extension and diffuser addition for occupancy change, parametric; UFC 3-410-01 | ASHRAE 62.1"
+      },
+      {
+        "item": 4,
+        "group": "G3-EXHAUST FANS",
+        "desc": "Remove and replace standard ceiling exhaust fans building-wide - 25 EA (FE-1 through FE-17 excluding FE-5/FE-7/FE-8; FE-18 through FE-30 excluding FE-21/FE-22/FE-28)",
+        "qty": 25,
+        "unit": "EA",
+        "uc": 650,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS; ceiling exhaust fan R&R, parametric; per AE drawing set as-built fan schedule confirmed"
+      },
+      {
+        "item": 5,
+        "group": "G3-EXHAUST FANS",
+        "desc": "Remove and replace straight sirocco fans (5 EA) - FE-5 (Rm 115 Mech), FE-8 (Rm 118-2/3), FE-21 (Rm 221/221A Men's Toilet), FE-22 (Rm 221A Men's Shower), FE-28 (Rm 241/242 Toilet/Shower)",
+        "qty": 5,
+        "unit": "EA",
+        "uc": 2500,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS; centrifugal sirocco exhaust fan R&R, parametric; larger centrifugal unit type per as-built schedule 111374"
+      },
+      {
+        "item": 6,
+        "group": "G3-EXHAUST FANS",
+        "desc": "FE-7, Room 118-1 Storage - remove and replace ceiling exhaust fan; confirmed in as-built ventilation equipment schedule (drawing 111374); exterior louver on drawing 111377 is separate architectural work excluded from this scope",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 650,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS; standard ceiling exhaust fan R&R, parametric; fan tag confirmed in as-built ventilation equipment schedule per drawing 111374; room confirmed as Storage per SH Plus floor plan 10/20/2025"
+      },
+      {
+        "item": 7,
+        "group": "G4-SYSTEM BALANCING",
+        "desc": "Test, Adjust, and Balance (TAB) full HVAC system, building-wide, after all work complete",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 18000,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS; full building TAB per AABC/NEBB standards, 28,699 SF, parametric; UFC 3-410-01"
+      },
+      {
+        "item": 8,
+        "group": "G5-GUARD ROOM HVAC",
+        "desc": "Remove and replace minisplit systems, Duty Hut Room 102 and Duty Room 103 (2 EA, ductless split, approx 1.5 to 2 ton each)",
+        "qty": 2,
+        "unit": "EA",
+        "uc": 4200,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS; ductless mini-split system R&R, parametric; UFC 3-410-01"
+      },
+      {
+        "item": 9,
+        "group": "G5-GUARD ROOM HVAC",
+        "desc": "Remove abandoned fancoils, outdoor units, refrigerant piping, and related HVAC equipment, guard room area (Rooms 102/103)",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 3500,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS; HVAC equipment demolition and disposal, parametric"
+      },
+      {
+        "item": 10,
+        "group": "G5-GUARD ROOM HVAC",
+        "desc": "Remove and replace Heat Exchange Units (HEUs) - HEU-1 (Room 102 Duty Hut) and HEU-2 (Room 103 Duty Room) - heat recovery ventilators, 2 EA",
+        "qty": 2,
+        "unit": "EA",
+        "uc": 4500,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS; heat recovery ventilator R&R, parametric; per as-built ventilation plan 111377 HEU schedule confirmed"
+      },
+      {
+        "item": 11,
+        "group": "G5-GUARD ROOM HVAC",
+        "desc": "Install new fresh air system serving both guard rooms (Rooms 102 and 103); replaces removed HEUs; provides conditioned fresh air to Duty Hut and Duty Room",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 8500,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS; ERV/HRV fresh air system with ductwork and controls, parametric; UFC 3-410-01 | ASHRAE 62.1"
+      },
+      {
+        "item": 12,
+        "group": "G6-MNS",
+        "desc": "Install junction box for Mass Notification System (MNS), Mechanical Room 115, FL1",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 1500,
+        "uniformat": "D50",
+        "notes": "RS Means FY24 CONUS; electrical junction box with conduit and connections, parametric; UFC 3-601-02 | NFPA 72"
+      },
+      {
+        "item": 13,
+        "group": "G7A-VAULT DEMO",
+        "desc": "Remove SIPR network rack from existing SIPR area (Rooms 209/210/211/212 secure cluster)",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 1200,
+        "uniformat": "F20",
+        "notes": "RS Means FY24 CONUS; rack removal and disposal, parametric"
+      },
+      {
+        "item": 14,
+        "group": "G7A-VAULT DEMO",
+        "desc": "Remove existing vault door from SIPR area (Rooms 209/210/211/212 cluster)",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 1500,
+        "uniformat": "F20",
+        "notes": "RS Means FY24 CONUS; vault door removal, parametric"
+      },
+      {
+        "item": 15,
+        "group": "G7B-VAULT CONST",
+        "desc": "Install GSA Class V vault door at SECRET storage area entrance (Corridor 251, access to Rooms 245-250 cluster) - Hamilton CI-5 door, FLANGE 2094 flange set, certified installation, prorated air freight TQL Global Air Services CVG-OKA",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 14599.4,
+        "uniformat": "C10",
+        "notes": " Hamilton CI-5 door + FLANGE 2094: $10,143.40 | Prorated air freight TQL Global Air Services 5-door CVG-OKA shipment: $1,956.00 | Certified install labor 2-person crew OCONUS: $2,500.00 | Authority: MCO 5530.14A | UFC 4-010-05 | GSA Class V specification"
+      },
+      {
+        "item": 16,
+        "group": "G7B-VAULT CONST",
+        "desc": "Install security bars on windows, SECRET storage area (Rooms 245-250 cluster)",
+        "qty": 10,
+        "unit": "EA",
+        "uc": 1200,
+        "uniformat": "C10",
+        "notes": "RS Means FY24 CONUS; security bar installation per window, parametric; 10 EA confirmed by client 16 Mar 2026; MCO 5530.14A"
+      },
+      {
+        "item": 17,
+        "group": "G7C-VAULT ELEC",
+        "desc": "Install SIPR network rack in new SECRET storage area (Rooms 245-250 cluster) - rack, backboard, ground bus bar, fiber optic connection from TR, conduit per CNSSAM TEMPEST/01-13",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 8500,
+        "uniformat": "D50",
+        "notes": "RS Means FY24 CONUS; SIPR network rack installation with infrastructure, parametric; CNSSAM TEMPEST/01-13 | DoDI 5200.08 | UFC 3-580-01"
+      },
+      {
+        "item": 18,
+        "group": "G7C-VAULT ELEC",
+        "desc": "Install conduit and raceways for IDS sensors, SECRET storage area (Rooms 245-250 cluster)",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 3500,
+        "uniformat": "D50",
+        "notes": "RS Means FY24 CONUS; IDS sensor conduit and raceway installation, parametric; MCO 5530.14A | ESAMS"
+      },
+      {
+        "item": 19,
+        "group": "G8-AHU PLUMBING",
+        "desc": "Replace central station AHU AC-1, Mechanical Room 115; 5,100 CFM, 2-pipe chilled water; original 2007 installation",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 42000,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS; central station CHW AHU R&R, 2-pipe CHW, approx 5,000 CFM; Div 23 74 13 parametric; UFC 3-410-01"
+      },
+      {
+        "item": 20,
+        "group": "G8-AHU PLUMBING",
+        "desc": "Replace central station AHU AC-2, Mechanical Room 115; 14,545 CFM, 2-pipe chilled water; original 2007 installation",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 89000,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS; central station CHW AHU R&R, 2-pipe CHW, approx 15,000 CFM; Div 23 74 13 parametric; UFC 3-410-01"
+      },
+      {
+        "item": 21,
+        "group": "G8-AHU PLUMBING",
+        "desc": "Mechanical room overhaul, Mechanical Room 115: CHW piping modifications, sensors, dampers, expansion tank, ductwork, insulation, and peripheral connections",
+        "qty": 1,
+        "unit": "LS",
+        "uc": 39300,
+        "uniformat": "D30",
+        "notes": "RS Means FY24 CONUS; 30% allowance of combined AHU cost ($42,000 + $89,000 = $131,000) = $39,300 LS; Level 3 ROM percentage-based allowance for peripheral work tied to major equipment replacement; scope confirmed per drawings and site; UFC 3-410-01"
+      },
+      {
+        "item": 22,
+        "group": "G8-AHU PLUMBING",
+        "desc": "Replace electric water heater WHE, Mechanical Room 115; 100 gal commercial electric",
+        "qty": 1,
+        "unit": "EA",
+        "uc": 3800,
+        "uniformat": "D20",
+        "notes": "RS Means FY24 CONUS; electric water heater R&R, commercial, 100 gal; Div 22 33 30 parametric; UFC 3-420-01"
+      },
+      {
+        "item": 23,
+        "group": "G8-AHU PLUMBING",
+        "desc": "Replace domestic hot water recirculation pumps, Mechanical Room 115; 2 EA inline commercial",
+        "qty": 2,
+        "unit": "EA",
+        "uc": 1600,
+        "uniformat": "D20",
+        "notes": "RS Means FY24 CONUS; inline recirculation pump R&R, commercial; Div 22 11 23 parametric; UFC 3-420-01"
+      }
+    ]
+  }
+}

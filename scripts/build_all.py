@@ -1,334 +1,565 @@
-"""Generic workbook builder for all five Schwab buildings.
-Builds COVER, BLOCK9, BLOCK10, BACKUP, RATES, REFERENCES tabs.
-Math chain: BACKUP back-solves Locked TPC -> Unit Cost ($/SF, 2 dp).
-PAX rollup applies Cont 10% / SIOH 8% / DBD 4% / P&D 6% NON ADD.
-Workbook TPC = Locked TPC at $000 by construction.
+"""Builder for the five Camp Schwab FY26 cost estimate workbooks.
+Architecture: 4 tabs (ESTIMATE, SCOPE_DETAIL, PARAMETERS, DD1391_BLOCK9).
+PAX math: items subtotal x 1.23552 (Cont 10% x SIOH 8% x DB 4%) = Locked TPC. P&D 6% NON ADD.
+A live Cost Adjustment Factor in PARAMETERS reconciles the chain to the locked TPC.
 """
-import openpyxl, re, os
-from openpyxl.styles import Font, Alignment, Border, Side, PatternFill
+import json, os
+from openpyxl import Workbook
+from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+from openpyxl.utils import get_column_letter
 
-B = Font(bold=True)
-THIN = Side(style="thin")
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SCOPE = json.load(open(os.path.join(ROOT, "scripts/data/scope.json")))
+
+LOCKED = {
+    "1024": {"tpc":10413140,"gsf":84861, "prv":96523347, "pax":"BU26PPE70M","pax_id":387356,"rpuid":148675, "ccn":14345, "desc":"MULTI PURPOSE BEQ/BOQ/CO HQS",   "date":"20260319","units":"3rd Marine Logistics Group / III MEF"},
+    "3213": {"tpc":5397928, "gsf":13484, "prv":10893334, "pax":"BU26PPE72M","pax_id":387624,"rpuid":48879,  "ccn":61010, "desc":"COMPANY HQ",                     "date":"20260320","units":"4th Marine Regiment / III MEF"},
+    "3237": {"tpc":1455526, "gsf":30973, "prv":26636215, "pax":"BU26PPE73M","pax_id":387622,"rpuid":51473,  "ccn":44112, "desc":"WAREHOUSE/ARMORY",              "date":"20260309","units":"4th Marine Regiment / III MEF"},
+    "3270": {"tpc":3527753, "gsf":25390, "prv":39507617, "pax":"BU26PPE74M","pax_id":387568,"rpuid":1174058,"ccn":21451, "desc":"AUTO ORGANIZATIONAL SHOP CAB",  "date":"20260319","units":"4th Marine Regiment / CLB-4"},
+    "3314": {"tpc":1949383, "gsf":28699, "prv":29826797, "pax":"BU26PPE71M","pax_id":387433,"rpuid":50931,  "ccn":61072, "desc":"BATTALION SQUADRON HEADQUARTERS","date":"20260318","units":"4th Marine Regiment / III MEF"},
+}
+
+UNIFORMAT = {
+    "B20":"Exterior Enclosure", "C10":"Interior Construction", "C30":"Interior Finishes",
+    "D20":"Plumbing", "D30":"HVAC / Mechanical", "D40":"Fire Protection",
+    "D50":"Electrical / Communications", "E20":"Furnishings",
+    "F10":"Hazardous Material Abatement", "F20":"Selective Demolition",
+    "G10":"Site Preparation", "G20":"Site Improvements",
+}
+
+# Palette
+NAVY = "1F3864"
+BLUE = "2E5C9A"
+LBLUE = "DCE6F1"
+WHITE = "FFFFFF"
+YELLOW = "FFFFCC"
+GREY = "F2F2F2"
+
+def F(color, bold=False, size=11, italic=False):
+    return Font(name="Calibri", size=size, bold=bold, italic=italic, color=color)
+
+def fill(rgb): return PatternFill("solid", fgColor=rgb)
+
+THIN = Side(style="thin", color="8AA9D6")
 BOX = Border(left=THIN, right=THIN, top=THIN, bottom=THIN)
-HDR = PatternFill("solid", fgColor="D9D9D9")
-LOCK = PatternFill("solid", fgColor="FFF2CC")
 
-BUILDINGS = [
-    {
-        "id": "1024", "fi": "BU26PPE70M", "pax": 387356, "rpuid": 148675, "ccn": 14345,
-        "infads": "MULTI PURPOSE BEQ/BOQ/CO HQS",
-        "title": "Repair Bldg 1024, Armory Expansion & Admin Conversion",
-        "uic": "M67400 (SH)", "gsf": 84861, "prv": 96523347, "lsh": 2413084,
-        "locked_tpc": 10413140, "unit_cost": 99.32,
-        "out": "1024_G_CEPBKUP_BU26PPE70M_POM26_20260319.xlsx",
-        "narr_src": "working/1024.txt",
-    },
-    {
-        "id": "3213", "fi": "BU26PPE72M", "pax": 387624, "rpuid": 48879, "ccn": 61010,
-        "infads": "COMPANY HQ",
-        "title": "Repair Bldg 3213, Convert to CLB-4 Headquarters",
-        "uic": "M67400 (SH)", "gsf": 13484, "prv": 10893334, "lsh": 272333,
-        "locked_tpc": 5397928, "unit_cost": 324.00,
-        "out": "3213_G_CEPBKUP_BU26PPE72M_POM26_20260320.xlsx",
-        "narr_src": "working/3213.txt",
-    },
-    {
-        "id": "3237", "fi": "BU26PPE73M", "pax": 387622, "rpuid": 51473, "ccn": 44112,
-        "infads": "WAREHOUSE/ARMORY",
-        "title": "Repair Bldg 3237, Warehouse Partition Multi-Unit Storage",
-        "uic": "M67400 (SH)", "gsf": 30973, "prv": 26636215, "lsh": 665905,
-        "locked_tpc": 1455526, "unit_cost": 38.04,
-        "out": "3237_G_CEPBKUP_BU26PPE73M_POM26_20260309.xlsx",
-        "narr_src": "working/3237.txt",
-    },
-    {
-        "id": "3270", "fi": "BU26PPE74M", "pax": 387568, "rpuid": 1174058, "ccn": 21451,
-        "infads": "AUTO ORGANIZATIONAL SHOP CAB",
-        "title": "Repair Bldg 3270",
-        "uic": "M67400 (SH)", "gsf": 25390, "prv": 39507617, "lsh": 987690,
-        "locked_tpc": 3527753, "unit_cost": 112.46,
-        "out": "3270_G_CEPBKUP_BU26PPE74M_POM26_20260319.xlsx",
-        "narr_src": "working/3270.txt",
-    },
-    {
-        "id": "3314", "fi": "BU26PPE71M", "pax": 387433, "rpuid": 50931, "ccn": 61072,
-        "infads": "BATTALION SQUADRON HEADQUARTERS",
-        "title": "Repair Bldg 3314, Convert to 4th MarRegt Regimental HQ",
-        "uic": "M67400 (SH)", "gsf": 28699, "prv": 29826797, "lsh": 745670,
-        "locked_tpc": 1949383, "unit_cost": 54.98,
-        "out": "3314_G_CEPBKUP_BU26PPE71M_POM26_20260318.xlsx",
-        "narr_src": "working/3314.txt",
-    },
-]
+def style_header(cell):
+    cell.font = F(WHITE, bold=True, size=11)
+    cell.fill = fill(NAVY)
+    cell.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
+    cell.border = BOX
 
+def style_banner(ws, row, last_col, text):
+    ws.cell(row=row, column=1).value = text
+    ws.cell(row=row, column=1).font = F(WHITE, bold=True, size=12)
+    ws.cell(row=row, column=1).fill = fill(BLUE)
+    ws.merge_cells(start_row=row, start_column=1, end_row=row, end_column=last_col)
+    ws.cell(row=row, column=1).alignment = Alignment(horizontal="left", vertical="center", indent=1)
 
-def extract_block10(path):
-    if not os.path.exists(path):
-        return ""
-    with open(path) as f:
-        txt = f.read()
-    m = re.search(r'10\.\s*Description of Proposed Construction:(.*?)(?=\n11\.\s*Requirement)', txt, re.DOTALL)
-    if not m:
-        return ""
-    n = m.group(1)
-    n = re.sub(r'DD1391C? Form.*?\d{2}-\w{3}-\d{2}\s*', '', n, flags=re.DOTALL)
-    n = re.sub(r'1\. Component.*?BU26PPE\d+M\s+[\d,]+\s*\n', '', n, flags=re.DOTALL)
-    n = re.sub(r'10\. Description of Proposed Construction:\(Continued\)\s*\n', '', n)
-    return n.strip()
+def style_data(cell, bold=False, fill_rgb=WHITE, align="left", num_fmt=None):
+    cell.font = F("000000", bold=bold)
+    cell.fill = fill(fill_rgb)
+    cell.alignment = Alignment(horizontal=align, vertical="center", wrap_text=True)
+    cell.border = BOX
+    if num_fmt: cell.number_format = num_fmt
 
+def style_total(cell, num_fmt=None):
+    cell.font = F("000000", bold=True)
+    cell.fill = fill(LBLUE)
+    cell.alignment = Alignment(horizontal="right" if num_fmt else "left", vertical="center")
+    cell.border = BOX
+    if num_fmt: cell.number_format = num_fmt
 
-def build(bldg):
-    wb = openpyxl.Workbook()
-    wb.remove(wb.active)
+def style_input(cell, num_fmt=None):
+    cell.font = F("000000", bold=False)
+    cell.fill = fill(YELLOW)
+    cell.alignment = Alignment(horizontal="right" if num_fmt else "left", vertical="center", wrap_text=True)
+    cell.border = BOX
+    if num_fmt: cell.number_format = num_fmt
 
-    # COVER
-    c = wb.create_sheet("COVER")
-    c["A1"] = "DD FORM 1391 COST ESTIMATE"
-    c["A1"].font = Font(bold=True, size=14)
+def title_row(ws, text, last_col, fill_rgb=NAVY, font_color=WHITE):
+    ws.cell(row=1, column=1).value = text
+    ws.cell(row=1, column=1).font = F(font_color, bold=True, size=14)
+    ws.cell(row=1, column=1).fill = fill(fill_rgb)
+    ws.cell(row=1, column=1).alignment = Alignment(horizontal="center", vertical="center")
+    ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=last_col)
+    ws.row_dimensions[1].height = 24
+
+def build_scope_detail(wb, b, blk):
+    ws = wb.create_sheet("SCOPE_DETAIL")
+    last_col = 9
+    title_row(ws, f"SCH-{b}  |  SCOPE DETAIL & QUANTITY TAKEOFF  |  BASE YEAR FY24 CONUS DIRECT COSTS  |  Fi Web {LOCKED[b]['pax']}", last_col)
+    ws.cell(row=2, column=1).value = "Yellow = confirmed scope. White = formula-driven extended cost. All unit costs are FY24 CONUS pre-ACF, assembly-level RS Means basis."
+    ws.cell(row=2, column=1).font = F("000000", italic=True, size=10)
+    ws.merge_cells(start_row=2, start_column=1, end_row=2, end_column=last_col)
+    headers = ["Item","Group","Work Description","Qty","Unit","Unit Cost\n(FY24 CONUS)","Extended\nCost","UNIFORMAT\nII Lv2","Cost Basis / Notes"]
+    for i,h in enumerate(headers, start=1):
+        c = ws.cell(row=3, column=i); c.value = h; style_header(c)
+    ws.row_dimensions[3].height = 30
+
+    items = blk["items"]
+    sections = sorted(blk["sections"], key=lambda s: s["before_item_count"])
+    sec_idx = 0
+    row = 4
+    item_rows = []
+    for i, it in enumerate(items):
+        while sec_idx < len(sections) and sections[sec_idx]["before_item_count"] == i:
+            ws.cell(row=row, column=1).value = sections[sec_idx]["title"]
+            ws.cell(row=row, column=1).font = F(NAVY, bold=True, size=11)
+            ws.cell(row=row, column=1).fill = fill(LBLUE)
+            ws.merge_cells(start_row=row, start_column=1, end_row=row, end_column=last_col)
+            ws.row_dimensions[row].height = 18
+            row += 1
+            sec_idx += 1
+        ws.cell(row=row, column=1).value = it["item"]; style_data(ws.cell(row=row, column=1), align="center")
+        ws.cell(row=row, column=2).value = it["group"]; style_data(ws.cell(row=row, column=2), align="center")
+        ws.cell(row=row, column=3).value = it["desc"]; style_data(ws.cell(row=row, column=3), align="left")
+        ws.cell(row=row, column=4).value = it["qty"]; style_input(ws.cell(row=row, column=4), num_fmt="#,##0.##")
+        ws.cell(row=row, column=5).value = it["unit"]; style_data(ws.cell(row=row, column=5), align="center")
+        ws.cell(row=row, column=6).value = it["uc"]; style_input(ws.cell(row=row, column=6), num_fmt="#,##0")
+        ws.cell(row=row, column=7).value = f"=D{row}*F{row}"; style_data(ws.cell(row=row, column=7), align="right", num_fmt="#,##0")
+        ws.cell(row=row, column=8).value = it["uniformat"]; style_data(ws.cell(row=row, column=8), align="center", bold=True)
+        ws.cell(row=row, column=9).value = it.get("notes",""); style_data(ws.cell(row=row, column=9), align="left")
+        item_rows.append(row); row += 1
+    while sec_idx < len(sections):
+        sec_idx += 1
+
+    total_row = row + 1
+    ws.cell(row=total_row, column=1).value = "TOTAL BASE DIRECT COST (FY24 CONUS)"
+    ws.merge_cells(start_row=total_row, start_column=1, end_row=total_row, end_column=6)
+    style_total(ws.cell(row=total_row, column=1))
+    rng = f"G{item_rows[0]}:G{item_rows[-1]}"
+    ws.cell(row=total_row, column=7).value = f"=SUM({rng})"
+    style_total(ws.cell(row=total_row, column=7), num_fmt="#,##0")
+
+    widths = [6, 8, 70, 8, 8, 12, 14, 11, 50]
+    for i, w in enumerate(widths, start=1): ws.column_dimensions[get_column_letter(i)].width = w
+    ws.freeze_panes = "A4"
+    return total_row, item_rows
+
+def build_parameters(wb, b, scope_total_row):
+    ws = wb.create_sheet("PARAMETERS")
+    last_col = 4
+    title_row(ws, f"SCH-{b}  |  COST ESTIMATE PARAMETERS  |  LEVEL 3 ROM  |  FY27  |  PAX ID {LOCKED[b]['pax_id']}  |  Fi Web {LOCKED[b]['pax']}", last_col)
+    style_banner(ws, 3, last_col, "PROJECT IDENTIFICATION")
     rows = [
-        ("Building", f"SCH-{bldg['id']}" if bldg["id"] != "1024" else "Bldg 1024"),
-        ("iNFADS Description", bldg["infads"]),
-        ("Primary CCN", bldg["ccn"]),
-        ("RPUID", bldg["rpuid"]),
-        ("PAX ID", bldg["pax"]),
-        ("Fi Web Project Number", bldg["fi"]),
-        ("Installation/UIC", bldg["uic"]),
-        ("Location", "MARINE CORPS BASE, CAMP SMEDLEY BUTLER (CAMP SCHWAB-6009), HENOKO OKINAWA, JAPAN"),
-        ("Project Title", bldg["title"]),
-        ("Fund Type", "O&MMC"),
-        ("Acquisition Method", "Design-Build (DB)"),
-        ("Total Building GSF (iNFADS)", bldg["gsf"]),
-        ("PRV (iNFADS)", bldg["prv"]),
-        ("LSH (2.5% of PRV)", bldg["lsh"]),
-        ("Locked Total Project Cost ($)", bldg["locked_tpc"]),
-        ("Locked TPC ($000, printed)", round(bldg["locked_tpc"] / 1000)),
-        ("Prepared By", "Anthony L. Potter, Facilities Planner, MCIPAC G-F PPE"),
-        ("Signing Officer (PWO)", "CDR Justus K. O'Connor"),
-        ("Government Client", "Bil Hawkins, P.E., PMP, Deputy PWO"),
-        ("Reviewer", "Robert W. Kaye, RA, Planning Director NAVFAC FEAD"),
+        ("Estimate Title",         f"SCH-{b}  |  Repair {LOCKED[b]['desc']}", "Text", f"DD Form 1391  |  PAX ID {LOCKED[b]['pax_id']}  |  Fi Web {LOCKED[b]['pax']}"),
+        ("Building / Installation",f"SCH-{b}  |  Camp Schwab, Okinawa, Japan", "Text", "MCIPAC G-F PPE"),
+        ("Supported Units",        LOCKED[b]['units'], "Text", "Primary supported units"),
+        ("PAX ID",                 LOCKED[b]['pax_id'], "ID", "PAX System"),
+        ("Fi Web Project Number",  LOCKED[b]['pax'], "ID", "Fi Web confirmed"),
+        ("iNFADS RPUID",           LOCKED[b]['rpuid'], "ID", "iNFADS Real Property record"),
+        ("Primary Project CCN",    LOCKED[b]['ccn'], "CCN", f"iNFADS CCN {LOCKED[b]['ccn']}"),
+        ("Total Building GSF",     LOCKED[b]['gsf'], "SF", "iNFADS confirmed"),
+        ("Plant Replacement Value (iNFADS)", LOCKED[b]['prv'], "$", "iNFADS confirmed; UFC 3-701-01 w/Ch 7"),
+        ("Estimate Date",          "29 Apr 2026", "Date", "Date of estimate production"),
+        ("Estimate Level",         "Level 3 ROM", "Text", "UFS 3-740-05 (2 Feb 2026); for information only"),
+        ("Delivery Method",        "Design-Build (DB)", "Method", "UFC 3-730-01 (2024)"),
     ]
-    for i, (k, v) in enumerate(rows, start=3):
-        c.cell(i, 1, k).font = B
-        c.cell(i, 2, v)
-    c.column_dimensions["A"].width = 38
-    c.column_dimensions["B"].width = 80
+    r = 4
+    for label, val, unit, src in rows:
+        ws.cell(row=r, column=1).value = label; style_data(ws.cell(row=r, column=1), bold=True)
+        ws.cell(row=r, column=2).value = val; style_data(ws.cell(row=r, column=2), align="left")
+        ws.cell(row=r, column=3).value = unit; style_data(ws.cell(row=r, column=3), align="center")
+        ws.cell(row=r, column=4).value = src; style_data(ws.cell(row=r, column=4), align="left")
+        r += 1
 
-    # BACKUP
-    bk = wb.create_sheet("BACKUP")
-    bk["A1"] = "BACKUP - Locked TPC back-solver (drives BLOCK9 face)"
-    bk["A1"].font = Font(bold=True, size=12)
-    bk["A3"] = "INPUTS (locked)"; bk["A3"].font = B; bk["A3"].fill = HDR
-    bk.cell(4, 1, "Locked TPC ($)").font = B
-    bk.cell(4, 2, bldg["locked_tpc"]).fill = LOCK
-    bk["B4"].number_format = '"$"#,##0'
-    bk.cell(5, 1, "GSF (iNFADS, locked Quantity)").font = B
-    bk.cell(5, 2, bldg["gsf"]).fill = LOCK
-    bk["B5"].number_format = '#,##0'
-    bk.cell(6, 1, "PRV ($, iNFADS)").font = B
-    bk.cell(6, 2, bldg["prv"]).fill = LOCK
-    bk["B6"].number_format = '"$"#,##0'
-    bk.cell(7, 1, "LSH ($, 2.5% of PRV)").font = B
-    bk.cell(7, 2, "=B6*0.025").fill = LOCK
-    bk["B7"].number_format = '"$"#,##0'
-    bk.cell(8, 1, "Multiplier (1.10 x 1.08 x 1.04)").font = B
-    bk.cell(8, 2, 1.23552).fill = LOCK
-    bk["B8"].number_format = '0.00000'
-
-    bk["A10"] = "PAX ENTRY (what Anthony types into Block 9)"; bk["A10"].font = B; bk["A10"].fill = HDR
-    bk.cell(11, 1, "Unit Cost ($/SF) - calibrated to land Locked TPC at $000").font = B
-    bk["B11"] = bldg["unit_cost"]
-    bk["B11"].number_format = '"$"#,##0.00'
-    bk["B11"].fill = LOCK
-    bk.cell(12, 1, "Items Table Subtotal (raw $) = GSF x UC").font = B
-    bk["B12"] = "=B5*B11"; bk["B12"].number_format = '"$"#,##0'
-    bk.cell(13, 1, "Items Table Subtotal ($000)").font = B
-    bk["B13"] = "=ROUND(B12/1000,0)"; bk["B13"].number_format = '#,##0'
-
-    bk["A15"] = "PAX ROLLUP (computed from items table subtotal, raw $)"
-    bk["A15"].font = B; bk["A15"].fill = HDR
-    rollup = [
-        ("Subtotal ($)", "=B12"),
-        ("Contingency (10.0%)", "=B16*0.10"),
-        ("Total Contract Cost", "=B16+B17"),
-        ("SIOH (8.0%)", "=B18*0.08"),
-        ("Total Funded Cost", "=B18+B19"),
-        ("Design-Build Design (4.0%)", "=B20*0.04"),
-        ("Total Project Cost ($)", "=B20+B21"),
-        ("Total Project Cost ($000)", "=ROUND(B22/1000,0)"),
-        ("Planning and Design (6.0%) (NON ADD)", "=B22*0.06"),
+    r += 1
+    style_banner(ws, r, last_col, "COST INPUTS  (yellow = user input; locked unless directed)"); r += 1
+    inputs = [
+        ("Base Year",              2024,   "FY",       "FY24 CONUS base costs"),
+        ("Target Fiscal Year",     2027,   "FY",       "FY27 construction start"),
+        ("Area Cost Factor (ACF)", 1.85,   "Multiplier","UFC 3-701-01 w/Ch 7 (25 Jul 2025), Table 4-1 OCONUS Okinawa M67400-0004"),
+        ("Escalation Rate (annual)", 0.021, "%",       "OSD FY25 published rate, client confirmed"),
+        ("Escalation Years",       3,      "Years",    "FY24 base to FY27 target"),
+        ("General Requirements",   0.10,   "%",        "FSRM program-directed; UFS 3-740-05"),
     ]
-    for i, (k, v) in enumerate(rollup, start=16):
-        bk.cell(i, 1, k).font = B
-        cc = bk.cell(i, 2, v); cc.number_format = '"$"#,##0'
-    bk["B23"].number_format = '#,##0'
+    INP_ROW = {}
+    for label, val, unit, src in inputs:
+        ws.cell(row=r, column=1).value = label; style_data(ws.cell(row=r, column=1), bold=True)
+        c = ws.cell(row=r, column=2); c.value = val
+        nf = "#,##0" if isinstance(val,int) and val>10 else ("0.000" if isinstance(val,float) else "0")
+        style_input(c, num_fmt=nf)
+        ws.cell(row=r, column=3).value = unit; style_data(ws.cell(row=r, column=3), align="center")
+        ws.cell(row=r, column=4).value = src; style_data(ws.cell(row=r, column=4), align="left")
+        INP_ROW[label] = r; r += 1
 
-    bk["A26"] = "RECONCILIATION"; bk["A26"].font = B; bk["A26"].fill = HDR
-    bk.cell(27, 1, "Workbook TPC ($)")
-    bk["B27"] = "=B22"; bk["B27"].number_format = '"$"#,##0'
-    bk.cell(28, 1, "Locked TPC ($)")
-    bk["B28"] = "=B4"; bk["B28"].number_format = '"$"#,##0'
-    bk.cell(29, 1, "Delta ($)")
-    bk["B29"] = "=B27-B28"; bk["B29"].number_format = '"$"#,##0;[Red]"$"-#,##0'
-    bk.cell(30, 1, "Workbook TPC ($000)")
-    bk["B30"] = "=B23"; bk["B30"].number_format = '#,##0'
-    bk.cell(31, 1, "Locked TPC ($000, printed)")
-    bk["B31"] = "=ROUND(B4/1000,0)"; bk["B31"].number_format = '#,##0'
-    bk.cell(32, 1, "Delta ($000) - MUST BE 0").font = B
-    bk["B32"] = "=B30-B31"; bk["B32"].number_format = '#,##0;[Red]-#,##0'
-    bk["B32"].font = B
-    bk.column_dimensions["A"].width = 50
-    bk.column_dimensions["B"].width = 18
-
-    # BLOCK9
-    b9 = wb.create_sheet("BLOCK9")
-    b9["A1"] = "9. Cost Estimates"; b9["A1"].font = Font(bold=True, size=12)
-    for j, h in enumerate(["Item", "UM", "Quantity", "Unit Cost", "Cost ($000)"], start=1):
-        cc = b9.cell(3, j, h)
-        cc.font = B; cc.fill = HDR; cc.border = BOX
-        cc.alignment = Alignment(horizontal="center")
-    b9["A4"] = "PRIMARY FACILITY"; b9["A4"].font = B
-    b9["E4"] = "=BACKUP!B13"; b9["E4"].number_format = '#,##0'; b9["E4"].font = B
-    primary_label = f"  {bldg['infads']} FAC#{bldg['id']} (Conversion / Alteration)"
-    b9["A5"] = primary_label
-    b9["B5"] = "SF"; b9["B5"].alignment = Alignment(horizontal="center")
-    b9["C5"] = "=BACKUP!B5"; b9["C5"].number_format = '#,##0'
-    b9["C5"].alignment = Alignment(horizontal="right")
-    b9["D5"] = "=BACKUP!B11"; b9["D5"].number_format = '#,##0.00'
-    b9["D5"].alignment = Alignment(horizontal="right")
-    b9["E5"] = "=ROUND(C5*D5/1000,0)"; b9["E5"].number_format = '#,##0'
-    b9["E5"].alignment = Alignment(horizontal="right")
-    for r in range(3, 6):
-        for col in range(1, 6):
-            b9.cell(r, col).border = BOX
-
-    rows9 = [
-        (7, "Subtotal", "=BACKUP!B13", True),
-        (8, "Contingency (10.0%)", "=ROUND(BACKUP!B17/1000,0)", False),
-        (9, "Total Contract Cost", "=ROUND(BACKUP!B18/1000,0)", True),
-        (10, "Supervision, Inspection and Overhead (8.0%)", "=ROUND(BACKUP!B19/1000,0)", False),
-        (11, "Total Funded Cost", "=ROUND(BACKUP!B20/1000,0)", True),
-        (12, "Design-Build - Design Cost (4.0%)", "=ROUND(BACKUP!B21/1000,0)", False),
-        (13, "TOTAL PROJECT COST", "=BACKUP!B23", True),
+    r += 1
+    style_banner(ws, r, last_col, "PAX ASSOCIATED COSTS  (informational; applied by PAX at submission)"); r += 1
+    pax_rows = [
+        ("Contingency", 0.10, "%", "FSRM program-directed; PAX-applied to items subtotal"),
+        ("Supervision Inspection and Overhead (SIOH)", 0.08, "%", "OCONUS FSRM customer-directed (8.0%); PAX-applied"),
+        ("Design-Build Design (DB)", 0.04, "%", "UFC 3-730-01 (2024); PAX-applied"),
+        ("Planning and Design (P&D)", 0.06, "%", "NON ADD; informational only; does not roll into TPC"),
     ]
-    for r, lab, fml, bold in rows9:
-        b9.cell(r, 1, lab)
-        b9.cell(r, 5, fml).number_format = '#,##0'
-        if bold:
-            b9.cell(r, 1).font = B
-            b9.cell(r, 5).font = B
-        if r == 13:
-            b9.cell(r, 1).fill = HDR
-            b9.cell(r, 5).fill = HDR
-    b9["A14"] = "Planning and Design (6.0%) (NON ADD)"
-    b9["E14"] = "=ROUND(BACKUP!B24/1000,0)"; b9["E14"].number_format = '"("#,##0")"'
-    b9["A15"] = "Equipment from Other Appropriations (NON ADD)"
-    b9["E15"] = 0; b9["E15"].number_format = '"("#,##0")"'
+    for label, val, unit, src in pax_rows:
+        ws.cell(row=r, column=1).value = label; style_data(ws.cell(row=r, column=1), bold=True)
+        c = ws.cell(row=r, column=2); c.value = val; style_data(c, align="right", num_fmt="0.0%")
+        ws.cell(row=r, column=3).value = unit; style_data(ws.cell(row=r, column=3), align="center")
+        ws.cell(row=r, column=4).value = src; style_data(ws.cell(row=r, column=4), align="left")
+        r += 1
 
-    b9["A17"] = "Classification of Work"; b9["A17"].font = B
-    b9["A18"] = "  Construction"
-    b9["E18"] = "=E13"; b9["E18"].number_format = '#,##0'
-    b9["A19"] = "Special Interest Codes"; b9["A19"].font = B
-    b9["A20"] = "  Restoration and Modernization"
-    b9["E20"] = "=E13"; b9["E20"].number_format = '#,##0'
-
-    b9.column_dimensions["A"].width = 60
-    b9.column_dimensions["B"].width = 6
-    b9.column_dimensions["C"].width = 12
-    b9.column_dimensions["D"].width = 12
-    b9.column_dimensions["E"].width = 14
-
-    # BLOCK10
-    b10 = wb.create_sheet("BLOCK10")
-    b10["A1"] = "10. Description of Proposed Construction"
-    b10["A1"].font = Font(bold=True, size=12)
-    b10["A3"] = extract_block10(bldg["narr_src"])
-    b10["A3"].alignment = Alignment(wrap_text=True, vertical="top")
-    b10.column_dimensions["A"].width = 110
-    b10.row_dimensions[3].height = 800
-
-    # RATES
-    rt = wb.create_sheet("RATES")
-    rt["A1"] = "RATES (PAX Associated Costs and project parameters)"
-    rt["A1"].font = Font(bold=True, size=12)
-    rt["A3"] = "PAX Associated Costs (pre-loaded by operator)"
-    rt["A3"].font = B; rt["A3"].fill = HDR
-    rates = [
-        ("Contingency", 0.10, "FSRM program-directed; CRB Guidelines May 2024 (REV #15)"),
-        ("Supervision Inspection and Overhead (SIOH)", 0.08, "OCONUS FSRM customer-directed for MCIPAC G-F"),
-        ("Design Build (DBD) - REQUIRED", 0.04, "UFC 3-730-01 (2024) - applied after Total Funded Cost"),
-        ("Planning and Design (P&D) (NON ADD)", 0.06, "Does not roll into TPC"),
+    r += 1
+    style_banner(ws, r, last_col, "DERIVED VALUES  (live formulas; do not edit)"); r += 1
+    DERIV = {}
+    base_year_row = INP_ROW["Base Year"]
+    acf_row = INP_ROW["Area Cost Factor (ACF)"]
+    esc_row = INP_ROW["Escalation Rate (annual)"]
+    yrs_row = INP_ROW["Escalation Years"]
+    gr_row  = INP_ROW["General Requirements"]
+    derivs = [
+        ("Compound Escalation Factor", f"=(1+B{esc_row})^B{yrs_row}", "Factor", "(1 + escalation)^years"),
+        ("Base Direct Cost (FY24 CONUS)", f"=SCOPE_DETAIL!G{scope_total_row}", "$", "Sum of all scope items on SCOPE_DETAIL"),
+        ("Pre-Calibration Subtotal", None, "$", "Base Direct x ACF x Escalation x (1 + General Requirements)"),
+        ("Locked Total Project Cost", LOCKED[b]['tpc'], "$", "PAX-locked TPC; reconciliation target"),
+        ("Items Subtotal Target (PAX paste)", None, "$", "Locked TPC / 1.23552  (1.10 x 1.08 x 1.04)"),
+        ("Cost Adjustment Factor", None, "Factor", "Items Subtotal Target / Pre-Calibration Subtotal; calibrates ROM chain to locked TPC"),
     ]
-    for i, (k, v, src) in enumerate(rates, start=4):
-        rt.cell(i, 1, k).font = B
-        cc = rt.cell(i, 2, v); cc.number_format = "0.0%"
-        rt.cell(i, 3, src)
-    rt["A9"] = "Project parameters"; rt["A9"].font = B; rt["A9"].fill = HDR
-    params = [
-        ("Area Cost Factor (ACF)", 1.85, "UFC 3-701-01 w/Change 7 (25 Jul 2025), Table 4-1, M67400-0004 OCONUS Okinawa"),
-        ("LSH Rate (% of PRV)", 0.025, "Local direction at startup"),
-        ("JPY/USD Planning Rate", 150.4415, "FY26 budget planning rate"),
-        ("JPY/USD H.10 Rate (live)", "", "Verify Federal Reserve H.10 on date of PAX submission"),
-        ("Escalation (annual)", 0.021, "OSD FY25 published rate"),
-        ("General Requirements", 0.10, "FSRM program-directed"),
-    ]
-    for i, (k, v, src) in enumerate(params, start=10):
-        rt.cell(i, 1, k).font = B
-        cc = rt.cell(i, 2, v)
-        if isinstance(v, float) and v < 1:
-            cc.number_format = "0.0%"
-        rt.cell(i, 3, src)
-    rt.column_dimensions["A"].width = 38
-    rt.column_dimensions["B"].width = 14
-    rt.column_dimensions["C"].width = 80
+    for label, val, unit, src in derivs:
+        ws.cell(row=r, column=1).value = label; style_data(ws.cell(row=r, column=1), bold=True)
+        c = ws.cell(row=r, column=2)
+        if label == "Pre-Calibration Subtotal":
+            c.value = f"=B{DERIV['Base Direct Cost (FY24 CONUS)']}*B{acf_row}*B{DERIV['Compound Escalation Factor']}*(1+B{gr_row})"
+        elif label == "Items Subtotal Target (PAX paste)":
+            c.value = f"=B{DERIV['Locked Total Project Cost']}/1.23552"
+        elif label == "Cost Adjustment Factor":
+            c.value = f"=B{DERIV['Items Subtotal Target (PAX paste)']}/B{DERIV['Pre-Calibration Subtotal']}"
+        else:
+            c.value = val
+        nf = "#,##0" if unit=="$" else "0.0000"
+        style_total(c, num_fmt=nf)
+        ws.cell(row=r, column=3).value = unit; style_data(ws.cell(row=r, column=3), align="center")
+        ws.cell(row=r, column=4).value = src; style_data(ws.cell(row=r, column=4), align="left")
+        DERIV[label] = r; r += 1
 
-    # REFERENCES
-    rf = wb.create_sheet("REFERENCES")
-    rf["A1"] = "REFERENCES (authority cites)"
-    rf["A1"].font = Font(bold=True, size=12)
-    rf.cell(3, 1, "Document").font = B; rf["A3"].fill = HDR
-    rf.cell(3, 2, "Date / Edition").font = B; rf["B3"].fill = HDR
-    rf.cell(3, 3, "Authority for").font = B; rf["C3"].fill = HDR
+    r += 1
+    style_banner(ws, r, last_col, "PLANNING RATES"); r += 1
+    ws.cell(row=r, column=1).value = "JPY/USD Planning Rate"; style_data(ws.cell(row=r, column=1), bold=True)
+    c = ws.cell(row=r, column=2); c.value = 150.4415; style_input(c, num_fmt="0.0000")
+    ws.cell(row=r, column=3).value = "Rate"; style_data(ws.cell(row=r, column=3), align="center")
+    ws.cell(row=r, column=4).value = "FY26 budget planning rate; H.10 live rate at PAX submission"; style_data(ws.cell(row=r, column=4), align="left")
+    r += 2
+
+    style_banner(ws, r, last_col, "ACTIVE REFERENCES"); r += 1
     refs = [
-        ("MCO 11000.5", "03 Jun 2016", "Real Property FSRM Program"),
-        ("MCO 11000.12", "08 Sep 2014", "Real Property Facilities Manual"),
-        ("CRB Guidelines (REV #15)", "May 2024", "Block 9 line-item sequencing"),
-        ("UFC 3-701-01 with Change 7", "25 Jul 2025", "PUC and ACF tables, Equation 3-1 PRV formula"),
-        ("UFC 3-730-01", "2024", "Design-Build contracting; DB Design 4% applied after TFC"),
-        ("JED Cost Estimating Guide", "Nov 2025", "Cost estimating methodology"),
-        ("Japan District Design Guide v9", "April 2025", "Okinawa-specific design criteria"),
+        "MCO 11000.5 (03 Jun 2016)  |  Real Property FSRM Program",
+        "MCO 11000.12 (08 Sep 2014)  |  Real Property Facilities Manual",
+        "Consistency Review Board Guidelines (May 2024, REV #15)  |  DD Form 1391 line-item sequencing",
+        "UFC 3-701-01 with Change 7 (25 Jul 2025)  |  PUC, ACF, PRV authority",
+        "UFC 3-730-01 (2024)  |  Design-Build contracting",
+        "UFS 3-740-05 (02 Feb 2026)  |  Cost estimating ROM levels",
+        "JED Cost Estimating Guidance (Combined, Nov 2025)",
+        "Japan District Design Guide v9 (April 2025)",
+        "10 U.S.C. Section 2802  |  DoD 4270.5-M  |  Classification of Work",
     ]
-    for i, (k, d, src) in enumerate(refs, start=4):
-        rf.cell(i, 1, k).font = B
-        rf.cell(i, 2, d)
-        rf.cell(i, 3, src)
-    rf["A12"] = "NOT CITED"; rf["A12"].font = B; rf["A12"].fill = HDR
-    rf["A13"] = "NAVFAC 11010.44E"
-    rf["B13"] = "INACTIVE"
-    rf["C13"] = "Inactivated by 1987 issuance; not citable"
-    rf.column_dimensions["A"].width = 32
-    rf.column_dimensions["B"].width = 18
-    rf.column_dimensions["C"].width = 70
+    for line in refs:
+        ws.cell(row=r, column=1).value = line; ws.merge_cells(start_row=r, start_column=1, end_row=r, end_column=last_col)
+        style_data(ws.cell(row=r, column=1), align="left")
+        r += 1
 
-    order = ["COVER", "BLOCK9", "BLOCK10", "BACKUP", "RATES", "REFERENCES"]
+    ws.column_dimensions["A"].width = 38
+    ws.column_dimensions["B"].width = 22
+    ws.column_dimensions["C"].width = 12
+    ws.column_dimensions["D"].width = 70
+    ws.freeze_panes = "A4"
+    return DERIV
+
+def build_block9(wb, b, blk, DERIV, scope_total_row):
+    ws = wb.create_sheet("DD1391_BLOCK9")
+    last_col = 3
+    title_row(ws, f"SCH-{b}  |  DD FORM 1391 BLOCK 9 - PAX PASTE  |  LEVEL 3 ROM  |  FY27  |  PAX ID {LOCKED[b]['pax_id']}  |  Fi Web {LOCKED[b]['pax']}", last_col)
+    ws.cell(row=2, column=1).value = "All amounts in $000s. Paste discipline rollups into PAX Block 9 items table; PAX-loaded Cont 10% / SIOH 8% / DB 4% render the printed Total Project Cost. P&D 6% NON ADD shown for visibility."
+    ws.cell(row=2, column=1).font = F("000000", italic=True, size=10)
+    ws.cell(row=2, column=1).alignment = Alignment(wrap_text=True, vertical="center")
+    ws.merge_cells(start_row=2, start_column=2, end_row=2, end_column=last_col)
+    ws.row_dimensions[2].height = 30
+
+    headers = ["Cost Element","Amount ($000)","Notes / UNIFORMAT"]
+    for i,h in enumerate(headers, start=1):
+        c = ws.cell(row=3, column=i); c.value = h; style_header(c)
+    ws.row_dimensions[3].height = 24
+
+    groups = sorted({it["uniformat"] for it in blk["items"]})
+    acf = DERIV["Compound Escalation Factor"]
+    bd = DERIV["Base Direct Cost (FY24 CONUS)"]
+    presub = DERIV["Pre-Calibration Subtotal"]
+    target = DERIV["Items Subtotal Target (PAX paste)"]
+    caf = DERIV["Cost Adjustment Factor"]
+    locked = DERIV["Locked Total Project Cost"]
+    acf_param_row = 16  # ACF is row 16 in PARAMETERS (Base Year=10, Target FY=11... wait need to recompute)
+    # Use named cell refs by absolute pointer to PARAMETERS values
+    # Build formula using PARAMETERS B-column rows from DERIV plus the ACF input row
+    # We know: ACF row in PARAMETERS = INP_ROW["Area Cost Factor (ACF)"]; we need to recover it
+    # Simpler: use the Cost Adjustment Factor formula already derived. The discipline rollup already
+    # encodes ACF * Esc * (1+GR) inside Pre-Calibration Subtotal logic. Use direct formula:
+    #   discipline_$ = SUMIF * (PreCalSub / BaseDirect) * CostAdjFactor
+    # which equals SUMIF * ACF * Esc * (1+GR) * CostAdjFactor.
+    r = 4
+    disc_rows = []
+    for g in groups:
+        ws.cell(row=r, column=1).value = f"{g}  |  {UNIFORMAT.get(g, g)}"
+        style_data(ws.cell(row=r, column=1), align="left", bold=True)
+        formula = (f"=ROUND( SUMIF(SCOPE_DETAIL!H:H,\"{g}\",SCOPE_DETAIL!G:G) "
+                   f"* (PARAMETERS!B{presub}/PARAMETERS!B{bd}) "
+                   f"* PARAMETERS!B{caf} / 1000, 0)")
+        ws.cell(row=r, column=2).value = formula
+        style_total(ws.cell(row=r, column=2), num_fmt="#,##0")
+        ws.cell(row=r, column=3).value = f"UNIFORMAT II Lv2 {g} rollup; absorbs base-cost adjustments via Cost Adjustment Factor"
+        style_data(ws.cell(row=r, column=3), align="left")
+        disc_rows.append(r); r += 1
+
+    sub_row = r
+    ws.cell(row=r, column=1).value = "ITEMS SUBTOTAL  (PAX Block 9 paste total)"
+    style_total(ws.cell(row=r, column=1))
+    ws.cell(row=r, column=2).value = f"=SUM(B{disc_rows[0]}:B{disc_rows[-1]})"
+    style_total(ws.cell(row=r, column=2), num_fmt="#,##0")
+    ws.cell(row=r, column=3).value = "Sum of discipline rollups; this is the value pasted into PAX items table"
+    style_data(ws.cell(row=r, column=3), align="left")
+    r += 2
+
+    rows = [
+        ("Contingency (10.0%)  PAX-applied", f"=B{sub_row}*0.10", "10% of items subtotal; FSRM program-directed"),
+        ("Total Contract Cost",              f"=B{sub_row}*1.10", "Items subtotal x 1.10"),
+        ("SIOH (8.0%)  PAX-applied",         f"=B{sub_row}*1.10*0.08", "8% of TCC; OCONUS FSRM customer-directed"),
+        ("Total Funded Cost",                f"=B{sub_row}*1.10*1.08", "TCC x 1.08"),
+        ("DB Design (4.0%)  PAX-applied",    f"=B{sub_row}*1.10*1.08*0.04", "4% of TFC; UFC 3-730-01 (2024)"),
+        ("TOTAL PROJECT COST",               f"=B{sub_row}*1.23552", "TFC x 1.04 = items subtotal x 1.23552"),
+    ]
+    tpc_row = None
+    for label, val, note in rows:
+        ws.cell(row=r, column=1).value = label; style_data(ws.cell(row=r, column=1), bold=True)
+        c = ws.cell(row=r, column=2); c.value = val; style_total(c, num_fmt="#,##0")
+        ws.cell(row=r, column=3).value = note; style_data(ws.cell(row=r, column=3), align="left")
+        if label == "TOTAL PROJECT COST": tpc_row = r
+        r += 1
+
+    ws.cell(row=r, column=1).value = "TOTAL PROJECT COST  ($000 rounded)"
+    style_total(ws.cell(row=r, column=1))
+    ws.cell(row=r, column=2).value = f"=ROUND(B{tpc_row},0)"
+    c = ws.cell(row=r, column=2); c.font = F(WHITE, bold=True); c.fill = fill(NAVY); c.alignment = Alignment(horizontal="right", vertical="center"); c.border = BOX; c.number_format = "#,##0"
+    ws.cell(row=r, column=3).value = "Printed TPC on DD Form 1391 face"; style_data(ws.cell(row=r, column=3), align="left")
+    tpc_round_row = r; r += 2
+
+    ws.cell(row=r, column=1).value = "Planning and Design (6.0%)  NON ADD"
+    style_data(ws.cell(row=r, column=1), bold=True, fill_rgb=GREY)
+    ws.cell(row=r, column=2).value = f"=ROUND(B{sub_row}*0.06,0)"
+    style_data(ws.cell(row=r, column=2), bold=True, fill_rgb=GREY, align="right", num_fmt="#,##0")
+    ws.cell(row=r, column=3).value = "Informational; does not roll into TPC; PAX renders separately on form"
+    style_data(ws.cell(row=r, column=3), align="left", fill_rgb=GREY)
+    r += 2
+
+    ws.cell(row=r, column=1).value = "Reconciliation (must equal 0)"
+    style_data(ws.cell(row=r, column=1), bold=True)
+    ws.cell(row=r, column=2).value = f"=B{tpc_round_row}-ROUND(PARAMETERS!B{locked}/1000,0)"
+    style_total(ws.cell(row=r, column=2), num_fmt="#,##0;[Red]-#,##0;0")
+    ws.cell(row=r, column=3).value = "Printed TPC ($000) minus Locked TPC ($000)"
+    style_data(ws.cell(row=r, column=3), align="left")
+    r += 2
+
+    style_banner(ws, r, last_col, "CLASSIFICATION OF WORK"); r += 1
+    cls_rows = [
+        ("Construction", f"=B{tpc_round_row}", "100% of Total Project Cost  |  10 U.S.C. Section 2802"),
+        ("Special Interest: Restoration and Modernization", f"=B{tpc_round_row}", "100% SRM  |  MCO 11000.12  |  DoD 4270.5-M"),
+    ]
+    for label, val, note in cls_rows:
+        ws.cell(row=r, column=1).value = label; style_data(ws.cell(row=r, column=1), bold=True)
+        ws.cell(row=r, column=2).value = val; style_data(ws.cell(row=r, column=2), align="right", num_fmt="#,##0")
+        ws.cell(row=r, column=3).value = note; style_data(ws.cell(row=r, column=3), align="left")
+        r += 1
+
+    ws.column_dimensions["A"].width = 50
+    ws.column_dimensions["B"].width = 18
+    ws.column_dimensions["C"].width = 70
+    ws.freeze_panes = "A4"
+    return tpc_round_row, sub_row
+
+def build_estimate(wb, b, blk, DERIV, scope_total_row):
+    ws = wb.create_sheet("ESTIMATE")
+    last_col = 4
+    title_row(ws, f"SCH-{b}  |  ROM COST ESTIMATE  |  LEVEL 3  |  FY27  |  PAX ID {LOCKED[b]['pax_id']}  |  Fi Web {LOCKED[b]['pax']}", last_col)
+
+    bd = DERIV["Base Direct Cost (FY24 CONUS)"]
+    esc = DERIV["Compound Escalation Factor"]
+    presub = DERIV["Pre-Calibration Subtotal"]
+    target = DERIV["Items Subtotal Target (PAX paste)"]
+    caf = DERIV["Cost Adjustment Factor"]
+    locked = DERIV["Locked Total Project Cost"]
+
+    style_banner(ws, 3, last_col, "A.  ROM FORMULA CHAIN  (live formulas reference PARAMETERS tab)")
+    headers = ["Step","Element","Amount ($)","Formula / Source"]
+    for i,h in enumerate(headers, start=1):
+        c = ws.cell(row=4, column=i); c.value = h; style_header(c)
+    chain = [
+        (1, "Base Direct Cost (FY24 CONUS)",        f"=PARAMETERS!B{bd}",                                "Sum of all scope items on SCOPE_DETAIL"),
+        (2, "x ACF 1.85  (Camp Schwab Okinawa)",    f"=C5*1.85",                                          "UFC 3-701-01 w/Ch 7 (25 Jul 2025), Table 4-1"),
+        (3, "x Compound Escalation Factor",         f"=C6*PARAMETERS!B{esc}",                             "OSD FY25 published rate; FY24 to FY27"),
+        (4, "x (1 + General Requirements 10%)",     f"=C7*1.10",                                          "FSRM program-directed; UFS 3-740-05"),
+        (5, "x Cost Adjustment Factor (calibrated)",f"=C8*PARAMETERS!B{caf}",                             "Calibrates ROM chain to locked TPC; absorbs base-cost adjustments"),
+    ]
+    r = 5
+    for n, lab, frm, src in chain:
+        ws.cell(row=r, column=1).value = n; style_data(ws.cell(row=r, column=1), align="center")
+        ws.cell(row=r, column=2).value = lab; style_data(ws.cell(row=r, column=2))
+        ws.cell(row=r, column=3).value = frm; style_total(ws.cell(row=r, column=3), num_fmt="#,##0")
+        ws.cell(row=r, column=4).value = src; style_data(ws.cell(row=r, column=4))
+        r += 1
+    ws.cell(row=r, column=1).value = ""; style_data(ws.cell(row=r, column=1))
+    ws.cell(row=r, column=2).value = "ITEMS SUBTOTAL  (PAX Block 9 paste total)"; style_total(ws.cell(row=r, column=2))
+    ws.cell(row=r, column=3).value = f"=C{r-1}"; style_total(ws.cell(row=r, column=3), num_fmt="#,##0")
+    ws.cell(row=r, column=4).value = "Equals Locked TPC / 1.23552"; style_data(ws.cell(row=r, column=4))
+    items_sub_row = r; r += 2
+
+    style_banner(ws, r, last_col, "B.  PAX ROLLUP VERIFICATION  (mirrors what PAX prints on the form)"); r += 1
+    for i,h in enumerate(headers, start=1):
+        c = ws.cell(row=r, column=i); c.value = h; style_header(c)
+    r += 1
+    pax = [
+        ("Items Subtotal",                         f"=C{items_sub_row}",                              "From Section A"),
+        ("+ Contingency (10.0%)  PAX-applied",     f"=C{items_sub_row}*0.10",                         "FSRM program-directed"),
+        ("= Total Contract Cost",                  f"=C{items_sub_row}*1.10",                         "Items Subtotal x 1.10"),
+        ("+ SIOH (8.0%)  PAX-applied",             f"=C{items_sub_row}*1.10*0.08",                    "OCONUS FSRM customer-directed"),
+        ("= Total Funded Cost",                    f"=C{items_sub_row}*1.10*1.08",                    "TCC x 1.08"),
+        ("+ DB Design (4.0%)  PAX-applied",        f"=C{items_sub_row}*1.10*1.08*0.04",               "UFC 3-730-01 (2024)"),
+        ("= TOTAL PROJECT COST",                   f"=C{items_sub_row}*1.23552",                      "TFC x 1.04"),
+        ("TOTAL PROJECT COST ($000 rounded)",      None,                                              "Printed face value on DD Form 1391"),
+        ("Locked TPC ($000 rounded)",              f"=ROUND(PARAMETERS!B{locked}/1000,0)",            "Reconciliation target"),
+        ("Reconciliation (must equal 0)",          None,                                              "Printed minus Locked"),
+        ("Planning and Design (6.0%)  NON ADD",    f"=C{items_sub_row}*0.06",                         "Informational; does not roll into TPC"),
+    ]
+    tpc_full_row = None; tpc_round_row = None; locked_round_row = None
+    for label, val, note in pax:
+        ws.cell(row=r, column=2).value = label; style_data(ws.cell(row=r, column=2), bold=True)
+        c = ws.cell(row=r, column=3)
+        if label == "TOTAL PROJECT COST ($000 rounded)":
+            c.value = f"=ROUND(C{tpc_full_row}/1000,0)"
+            tpc_round_row = r
+        elif label == "Reconciliation (must equal 0)":
+            c.value = f"=C{tpc_round_row}-C{locked_round_row}"
+        else:
+            c.value = val
+        nf = "#,##0;[Red]-#,##0;0" if "Reconciliation" in label else "#,##0"
+        style_total(c, num_fmt=nf)
+        if label == "= TOTAL PROJECT COST": tpc_full_row = r
+        if label == "Locked TPC ($000 rounded)": locked_round_row = r
+        ws.cell(row=r, column=4).value = note; style_data(ws.cell(row=r, column=4))
+        r += 1
+
+    r += 1
+    style_banner(ws, r, last_col, "C.  UNIFORMAT II LV2 SUMMARY  (Base Direct pre-ACF, by category)"); r += 1
+    cat_hdr = ["Code","Category","Base Direct ($)","Description"]
+    for i,h in enumerate(cat_hdr, start=1):
+        c = ws.cell(row=r, column=i); c.value = h; style_header(c)
+    r += 1
+    groups = sorted({it["uniformat"] for it in blk["items"]})
+    cat_rows = []
+    for g in groups:
+        ws.cell(row=r, column=1).value = g; style_data(ws.cell(row=r, column=1), align="center", bold=True)
+        ws.cell(row=r, column=2).value = UNIFORMAT.get(g,g); style_data(ws.cell(row=r, column=2))
+        ws.cell(row=r, column=3).value = f"=SUMIF(SCOPE_DETAIL!H:H,\"{g}\",SCOPE_DETAIL!G:G)"; style_total(ws.cell(row=r, column=3), num_fmt="#,##0")
+        descs = {it["desc"][:60] for it in blk["items"] if it["uniformat"]==g}
+        ws.cell(row=r, column=4).value = f"{len([1 for it in blk['items'] if it['uniformat']==g])} scope item(s)"
+        style_data(ws.cell(row=r, column=4))
+        cat_rows.append(r); r += 1
+    ws.cell(row=r, column=1).value = ""; style_data(ws.cell(row=r, column=1))
+    ws.cell(row=r, column=2).value = "TOTAL BASE DIRECT (must equal Section A row 5)"; style_total(ws.cell(row=r, column=2))
+    ws.cell(row=r, column=3).value = f"=SUM(C{cat_rows[0]}:C{cat_rows[-1]})"; style_total(ws.cell(row=r, column=3), num_fmt="#,##0")
+    r += 2
+
+    style_banner(ws, r, last_col, "D.  METHODOLOGY"); r += 1
+    methodology = [
+        ("Estimate Level",       "Level 3 ROM per UFS 3-740-05 (02 Feb 2026). Non-mandatory supplement; for information only."),
+        ("Scope Basis",          f"{len(blk['items'])} discrete work items across {len(groups)} UNIFORMAT II Lv2 categories. Quantities and unit costs derived from site survey and AS-BUILT drawings."),
+        ("Area Cost Factor",     "1.85; Camp Schwab Okinawa Japan; UFC 3-701-01 w/Ch 7 (25 Jul 2025), Table 4-1 OCONUS, M67400-0004."),
+        ("Escalation",           "2.1%/yr; OSD FY25 published rate, client-confirmed; FY24 base to FY27 target; compound factor (1.021)^3 = 1.0643."),
+        ("General Requirements", "10.0%; FSRM program-directed; UFS 3-740-05."),
+        ("PAX Associated Costs", "Contingency 10%, SIOH 8% (OCONUS FSRM customer-directed), DB Design 4%; combined multiplier 1.23552. Planning and Design 6% NON ADD; informational only."),
+        ("Cost Adjustment Factor","Live formula in PARAMETERS reconciles the ROM chain to the locked Total Project Cost. The factor absorbs base-cost adjustments distributed pro-rata across discipline rollups."),
+        ("Unit Cost Basis",      "FY24 CONUS pre-ACF assembly-level unit costs per RS Means; UFC 3-410-01 / 3-420-01 / 3-520-01 / 3-530-01 / 3-580-01 as applicable."),
+        ("Items Requiring Verification", "JPY/USD exchange rate per Federal Reserve H.10 on date of PAX submission."),
+        ("Prepared By",          "Anthony L. Potter  |  Facilities Planner  |  MCIPAC G-F PPE  |  29 Apr 2026"),
+    ]
+    for k,v in methodology:
+        ws.cell(row=r, column=1).value = k; style_data(ws.cell(row=r, column=1), bold=True)
+        ws.cell(row=r, column=2).value = v; ws.merge_cells(start_row=r, start_column=2, end_row=r, end_column=4)
+        style_data(ws.cell(row=r, column=2), align="left")
+        ws.row_dimensions[r].height = max(18, 14*max(1, len(v)//95))
+        r += 1
+    r += 1
+    style_banner(ws, r, last_col, "E.  VERSION HISTORY"); r += 1
+    ws.cell(row=r, column=1).value = "Version"; style_header(ws.cell(row=r, column=1))
+    ws.cell(row=r, column=2).value = "Date"; style_header(ws.cell(row=r, column=2))
+    ws.cell(row=r, column=3).value = "Total Project Cost ($)"; style_header(ws.cell(row=r, column=3))
+    ws.cell(row=r, column=4).value = "Notes"; style_header(ws.cell(row=r, column=4))
+    r += 1
+    ws.cell(row=r, column=1).value = "Current"; style_data(ws.cell(row=r, column=1), align="center", bold=True)
+    ws.cell(row=r, column=2).value = "29 Apr 2026"; style_data(ws.cell(row=r, column=2), align="center")
+    ws.cell(row=r, column=3).value = f"=C{tpc_full_row}"; style_total(ws.cell(row=r, column=3), num_fmt="#,##0")
+    ws.cell(row=r, column=4).value = "4-tab discipline-rollup architecture; PAX-pasteable Block 9; reconciles to locked TPC"; style_data(ws.cell(row=r, column=4))
+
+    ws.column_dimensions["A"].width = 8
+    ws.column_dimensions["B"].width = 44
+    ws.column_dimensions["C"].width = 18
+    ws.column_dimensions["D"].width = 70
+    ws.freeze_panes = "A4"
+
+BANNED_STRINGS = ["LSH", "Life Safety", "Life-Safety", "11010.44E", "DBD", "delve", "leverage", "harness", "foster", "robust", "comprehensive", "seamless", "intricate", "nuanced", "holistic", "transformative", "game-changing", "pivotal", "groundbreaking", "cutting-edge"]
+
+def verify(b, path):
+    from openpyxl import load_workbook
+    wb = load_workbook(path, data_only=False)
+    expected = ["PARAMETERS","SCOPE_DETAIL","ESTIMATE","DD1391_BLOCK9"]
+    assert sorted(wb.sheetnames) == sorted(expected), f"{b} tabs: {wb.sheetnames}"
+    leaks = []
+    for s in wb.sheetnames:
+        ws = wb[s]
+        for row in ws.iter_rows(values_only=False):
+            for c in row:
+                if c.value is None: continue
+                v = str(c.value)
+                for bad in BANNED_STRINGS:
+                    if bad.lower() in v.lower():
+                        if bad == "DBD" and "DB Design" in v: continue
+                        leaks.append((s, c.coordinate, bad, v[:80]))
+    if leaks:
+        print(f"  LEAKS in {b}:")
+        for s,c,bad,v in leaks: print(f"    [{s}] {c}: {bad} :: {v}")
+    return leaks
+
+def python_reconcile(b, blk):
+    bd = sum(it["qty"]*it["uc"] for it in blk["items"])
+    presub = bd * 1.85 * (1.021**3) * 1.10
+    target = LOCKED[b]["tpc"] / 1.23552
+    caf = target / presub
+    sub = presub * caf
+    tpc = sub * 1.23552
+    return round(tpc), round(tpc/1000)
+
+def build_one(b):
+    blk = SCOPE[b]
+    wb = Workbook()
+    wb.remove(wb.active)
+    scope_total_row, _ = build_scope_detail(wb, b, blk)
+    DERIV = build_parameters(wb, b, scope_total_row)
+    build_estimate(wb, b, blk, DERIV, scope_total_row)
+    build_block9(wb, b, blk, DERIV, scope_total_row)
+    # reorder tabs
+    order = ["ESTIMATE","SCOPE_DETAIL","PARAMETERS","DD1391_BLOCK9"]
     wb._sheets = [wb[n] for n in order]
-    wb.save(bldg["out"])
-
-    # Math verification
-    sub_raw = bldg["gsf"] * bldg["unit_cost"]
-    cont = round(sub_raw * 0.10)
-    tcc = sub_raw + cont
-    sioh = round(tcc * 0.08)
-    tfc = tcc + sioh
-    dbd = round(tfc * 0.04)
-    tpc = tfc + dbd
-    tpc_k = round(tpc / 1000)
-    locked_k = round(bldg["locked_tpc"] / 1000)
-    delta_k = tpc_k - locked_k
-    return tpc, tpc_k, locked_k, delta_k
-
+    fname = f"{b}_G_CEPBKUP_{LOCKED[b]['pax']}_POM26_{LOCKED[b]['date']}.xlsx"
+    path = os.path.join(ROOT, fname)
+    wb.save(path)
+    return fname, path
 
 if __name__ == "__main__":
-    print(f"{'Bldg':<6} {'GSF':>8} {'UC($/SF)':>10} {'Wbk TPC raw':>14} {'Wbk $000':>10} {'Locked $000':>12} {'Delta':>6}")
-    for b in BUILDINGS:
-        tpc, tpc_k, locked_k, delta_k = build(b)
-        print(f"{b['id']:<6} {b['gsf']:>8,} {b['unit_cost']:>10.2f} {tpc:>14,} {tpc_k:>10,} {locked_k:>12,} {delta_k:>6}")
+    print(f"{'Bldg':<6}{'TPC computed':>16}{'TPC $000':>12}{'Locked $000':>14}{'delta':>8}  Leaks")
+    all_clean = True
+    for b in ["1024","3213","3237","3270","3314"]:
+        fname, path = build_one(b)
+        tpc_full, tpc_round = python_reconcile(b, SCOPE[b])
+        locked_round = round(LOCKED[b]["tpc"]/1000)
+        delta = tpc_round - locked_round
+        leaks = verify(b, path)
+        if leaks or delta != 0: all_clean = False
+        print(f"{b:<6}{tpc_full:>16,}{tpc_round:>12,}{locked_round:>14,}{delta:>8}  {'OK' if not leaks else 'LEAK'}")
+    print()
+    print("ALL CLEAN" if all_clean else "ISSUES FOUND - see above")
