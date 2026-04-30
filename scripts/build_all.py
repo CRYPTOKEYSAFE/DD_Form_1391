@@ -27,6 +27,22 @@ UNIFORMAT = {
     "G10":"Site Preparation", "G20":"Site Improvements",
 }
 
+# PAX Block 9 rollup behavior (observed empirically from PAX Form 1391 Processor):
+#   TCC = ROUND(items * 1.10)
+#   TFC = ROUND(TCC * 1.08)
+#   DB  = ROUND(items * 0.04)        <- DB applied to ITEMS subtotal, not to TFC
+#   TPC = TFC + DB                    <- additive, not compounded
+# Effective multiplier 1.10 * 1.08 + 0.04 = 1.228, NOT 1.10 * 1.08 * 1.04 = 1.23552.
+# Items Subtotal Target ($000) per building is calibrated so PAX's per-step rounding
+# chain produces the Locked TPC at $000 exactly.
+ITEMS_SUBTOTAL_TARGET_K = {
+    "1024": 8480,
+    "3213": 4395,
+    "3237": 1186,
+    "3270": 2873,
+    "3314": 1587,
+}
+
 # Palette
 NAVY = "1F3864"
 BLUE = "2E5C9A"
@@ -207,27 +223,33 @@ def build_parameters(wb, b, scope_total_row):
     esc_row = INP_ROW["Escalation Rate (annual)"]
     yrs_row = INP_ROW["Escalation Years"]
     gr_row  = INP_ROW["General Requirements"]
+    target_k = ITEMS_SUBTOTAL_TARGET_K[b]
+    target_dollars = target_k * 1000
     derivs = [
         ("Compound Escalation Factor", f"=(1+B{esc_row})^B{yrs_row}", "Factor", "(1 + escalation)^years"),
         ("Base Direct Cost (FY24 CONUS)", f"=SCOPE_DETAIL!G{scope_total_row}", "$", "Sum of all scope items on SCOPE_DETAIL"),
         ("Pre-Calibration Subtotal", None, "$", "Base Direct x ACF x Escalation x (1 + General Requirements)"),
         ("Locked Total Project Cost", LOCKED[b]['tpc'], "$", "PAX-locked TPC; reconciliation target"),
-        ("Items Subtotal Target (PAX paste)", None, "$", "Locked TPC / 1.23552  (1.10 x 1.08 x 1.04)"),
-        ("Cost Adjustment Factor", None, "Factor", "Items Subtotal Target / Pre-Calibration Subtotal; calibrates ROM chain to locked TPC"),
+        ("Items Subtotal Target ($000)", target_k, "$000", "Calibrated so PAX rollup chain (TPC = TFC + DB-on-items) produces Locked TPC"),
+        ("Items Subtotal Target ($)", None, "$", "Items Subtotal Target ($000) x 1000"),
+        ("Cost Adjustment Factor", None, "Factor", "Items Subtotal Target / Pre-Calibration Subtotal; calibrates ROM chain"),
     ]
     for label, val, unit, src in derivs:
         ws.cell(row=r, column=1).value = label; style_data(ws.cell(row=r, column=1), bold=True)
         c = ws.cell(row=r, column=2)
         if label == "Pre-Calibration Subtotal":
             c.value = f"=B{DERIV['Base Direct Cost (FY24 CONUS)']}*B{acf_row}*B{DERIV['Compound Escalation Factor']}*(1+B{gr_row})"
-        elif label == "Items Subtotal Target (PAX paste)":
-            c.value = f"=B{DERIV['Locked Total Project Cost']}/1.23552"
+        elif label == "Items Subtotal Target ($)":
+            c.value = f"=B{DERIV['Items Subtotal Target ($000)']}*1000"
         elif label == "Cost Adjustment Factor":
-            c.value = f"=B{DERIV['Items Subtotal Target (PAX paste)']}/B{DERIV['Pre-Calibration Subtotal']}"
+            c.value = f"=B{DERIV['Items Subtotal Target ($)']}/B{DERIV['Pre-Calibration Subtotal']}"
         else:
             c.value = val
-        nf = "#,##0" if unit=="$" else "0.0000"
-        style_total(c, num_fmt=nf)
+        nf = "#,##0" if unit in ("$","$000") else "0.0000"
+        if label == "Items Subtotal Target ($000)":
+            style_input(c, num_fmt=nf)
+        else:
+            style_total(c, num_fmt=nf)
         ws.cell(row=r, column=3).value = unit; style_data(ws.cell(row=r, column=3), align="center")
         ws.cell(row=r, column=4).value = src; style_data(ws.cell(row=r, column=4), align="left")
         DERIV[label] = r; r += 1
@@ -280,31 +302,32 @@ def build_block9(wb, b, blk, DERIV, scope_total_row):
     ws.row_dimensions[3].height = 24
 
     groups = sorted({it["uniformat"] for it in blk["items"]})
-    acf = DERIV["Compound Escalation Factor"]
     bd = DERIV["Base Direct Cost (FY24 CONUS)"]
     presub = DERIV["Pre-Calibration Subtotal"]
-    target = DERIV["Items Subtotal Target (PAX paste)"]
     caf = DERIV["Cost Adjustment Factor"]
     locked = DERIV["Locked Total Project Cost"]
-    acf_param_row = 16  # ACF is row 16 in PARAMETERS (Base Year=10, Target FY=11... wait need to recompute)
-    # Use named cell refs by absolute pointer to PARAMETERS values
-    # Build formula using PARAMETERS B-column rows from DERIV plus the ACF input row
-    # We know: ACF row in PARAMETERS = INP_ROW["Area Cost Factor (ACF)"]; we need to recover it
-    # Simpler: use the Cost Adjustment Factor formula already derived. The discipline rollup already
-    # encodes ACF * Esc * (1+GR) inside Pre-Calibration Subtotal logic. Use direct formula:
-    #   discipline_$ = SUMIF * (PreCalSub / BaseDirect) * CostAdjFactor
-    # which equals SUMIF * ACF * Esc * (1+GR) * CostAdjFactor.
+    target_k = DERIV["Items Subtotal Target ($000)"]
+    # Identify the largest discipline by raw base direct; place it last and use a "plug" formula so
+    # the rounded discipline rollups sum exactly to the calibrated Items Subtotal Target ($000).
+    group_sums = {g: sum(it["qty"]*it["uc"] for it in blk["items"] if it["uniformat"]==g) for g in groups}
+    largest = max(group_sums, key=group_sums.get)
+    groups_ordered = [g for g in groups if g != largest] + [largest]
     r = 4
     disc_rows = []
-    for g in groups:
+    for g in groups_ordered:
         ws.cell(row=r, column=1).value = f"{g}  |  {UNIFORMAT.get(g, g)}"
         style_data(ws.cell(row=r, column=1), align="left", bold=True)
-        formula = (f"=ROUND( SUMIF(SCOPE_DETAIL!H:H,\"{g}\",SCOPE_DETAIL!G:G) "
-                   f"* (PARAMETERS!B{presub}/PARAMETERS!B{bd}) "
-                   f"* PARAMETERS!B{caf} / 1000, 0)")
+        if g == largest and disc_rows:
+            formula = f"=PARAMETERS!B{target_k}-SUM(B{disc_rows[0]}:B{disc_rows[-1]})"
+            note = f"UNIFORMAT II Lv2 {g} rollup; balanced to Items Subtotal Target (absorbs rounding from other rollups)"
+        else:
+            formula = (f"=ROUND( SUMIF(SCOPE_DETAIL!H:H,\"{g}\",SCOPE_DETAIL!G:G) "
+                       f"* (PARAMETERS!B{presub}/PARAMETERS!B{bd}) "
+                       f"* PARAMETERS!B{caf} / 1000, 0)")
+            note = f"UNIFORMAT II Lv2 {g} rollup; absorbs base-cost adjustments via Cost Adjustment Factor"
         ws.cell(row=r, column=2).value = formula
         style_total(ws.cell(row=r, column=2), num_fmt="#,##0")
-        ws.cell(row=r, column=3).value = f"UNIFORMAT II Lv2 {g} rollup; absorbs base-cost adjustments via Cost Adjustment Factor"
+        ws.cell(row=r, column=3).value = note
         style_data(ws.cell(row=r, column=3), align="left")
         disc_rows.append(r); r += 1
 
@@ -317,25 +340,43 @@ def build_block9(wb, b, blk, DERIV, scope_total_row):
     style_data(ws.cell(row=r, column=3), align="left")
     r += 2
 
+    # PAX rollup chain (mirrors PAX Form 1391 Processor):
+    #   TCC = ROUND(items*1.10); TFC = ROUND(TCC*1.08); DB = ROUND(items*0.04); TPC = TFC + DB.
     rows = [
-        ("Contingency (10.0%)  PAX-applied", f"=B{sub_row}*0.10", "10% of items subtotal; FSRM program-directed"),
-        ("Total Contract Cost",              f"=B{sub_row}*1.10", "Items subtotal x 1.10"),
-        ("SIOH (8.0%)  PAX-applied",         f"=B{sub_row}*1.10*0.08", "8% of TCC; OCONUS FSRM customer-directed"),
-        ("Total Funded Cost",                f"=B{sub_row}*1.10*1.08", "TCC x 1.08"),
-        ("DB Design (4.0%)  PAX-applied",    f"=B{sub_row}*1.10*1.08*0.04", "4% of TFC; UFC 3-730-01 (2024)"),
-        ("TOTAL PROJECT COST",               f"=B{sub_row}*1.23552", "TFC x 1.04 = items subtotal x 1.23552"),
+        ("Contingency (10.0%)  PAX-applied", f"=ROUND(B{sub_row}*0.10,0)",         "10% of items subtotal; FSRM program-directed"),
+        ("Total Contract Cost (TCC)",        f"=ROUND(B{sub_row}*1.10,0)",         "ROUND(items subtotal x 1.10)"),
     ]
-    tpc_row = None
+    tcc_idx = None; tfc_idx = None; db_idx = None
+    rendered = []
     for label, val, note in rows:
         ws.cell(row=r, column=1).value = label; style_data(ws.cell(row=r, column=1), bold=True)
         c = ws.cell(row=r, column=2); c.value = val; style_total(c, num_fmt="#,##0")
         ws.cell(row=r, column=3).value = note; style_data(ws.cell(row=r, column=3), align="left")
-        if label == "TOTAL PROJECT COST": tpc_row = r
-        r += 1
+        rendered.append((label, r)); r += 1
+    tcc_row = [rr for lab,rr in rendered if lab.startswith("Total Contract")][0]
 
-    ws.cell(row=r, column=1).value = "TOTAL PROJECT COST  ($000 rounded)"
-    style_total(ws.cell(row=r, column=1))
-    ws.cell(row=r, column=2).value = f"=ROUND(B{tpc_row},0)"
+    ws.cell(row=r, column=1).value = "SIOH (8.0%)  PAX-applied"; style_data(ws.cell(row=r, column=1), bold=True)
+    ws.cell(row=r, column=2).value = f"=ROUND(B{tcc_row}*0.08,0)"; style_total(ws.cell(row=r, column=2), num_fmt="#,##0")
+    ws.cell(row=r, column=3).value = "8% of TCC; OCONUS FSRM customer-directed"; style_data(ws.cell(row=r, column=3), align="left")
+    r += 1
+    ws.cell(row=r, column=1).value = "Total Funded Cost (TFC)"; style_data(ws.cell(row=r, column=1), bold=True)
+    ws.cell(row=r, column=2).value = f"=ROUND(B{tcc_row}*1.08,0)"; style_total(ws.cell(row=r, column=2), num_fmt="#,##0")
+    ws.cell(row=r, column=3).value = "ROUND(TCC x 1.08)"; style_data(ws.cell(row=r, column=3), align="left")
+    tfc_row = r; r += 1
+
+    ws.cell(row=r, column=1).value = "DB Design (4.0%)  PAX-applied"; style_data(ws.cell(row=r, column=1), bold=True)
+    ws.cell(row=r, column=2).value = f"=ROUND(B{sub_row}*0.04,0)"; style_total(ws.cell(row=r, column=2), num_fmt="#,##0")
+    ws.cell(row=r, column=3).value = "ROUND(items subtotal x 0.04); PAX applies DB to items, not to TFC"; style_data(ws.cell(row=r, column=3), align="left")
+    db_row = r; r += 1
+
+    ws.cell(row=r, column=1).value = "TOTAL PROJECT COST"; style_total(ws.cell(row=r, column=1))
+    c = ws.cell(row=r, column=2); c.value = f"=B{tfc_row}+B{db_row}"
+    c.font = F(WHITE, bold=True); c.fill = fill(NAVY); c.alignment = Alignment(horizontal="right", vertical="center"); c.border = BOX; c.number_format = "#,##0"
+    ws.cell(row=r, column=3).value = "TFC + DB Design  (mirrors PAX Total Request)"; style_data(ws.cell(row=r, column=3), align="left")
+    tpc_row = r; r += 1
+
+    ws.cell(row=r, column=1).value = "TOTAL PROJECT COST  ($000 rounded)"; style_total(ws.cell(row=r, column=1))
+    ws.cell(row=r, column=2).value = f"=B{tpc_row}"
     c = ws.cell(row=r, column=2); c.font = F(WHITE, bold=True); c.fill = fill(NAVY); c.alignment = Alignment(horizontal="right", vertical="center"); c.border = BOX; c.number_format = "#,##0"
     ws.cell(row=r, column=3).value = "Printed TPC on DD Form 1391 face"; style_data(ws.cell(row=r, column=3), align="left")
     tpc_round_row = r; r += 2
@@ -381,7 +422,7 @@ def build_estimate(wb, b, blk, DERIV, scope_total_row):
     bd = DERIV["Base Direct Cost (FY24 CONUS)"]
     esc = DERIV["Compound Escalation Factor"]
     presub = DERIV["Pre-Calibration Subtotal"]
-    target = DERIV["Items Subtotal Target (PAX paste)"]
+    target_k = DERIV["Items Subtotal Target ($000)"]
     caf = DERIV["Cost Adjustment Factor"]
     locked = DERIV["Locked Total Project Cost"]
 
@@ -406,33 +447,42 @@ def build_estimate(wb, b, blk, DERIV, scope_total_row):
     ws.cell(row=r, column=1).value = ""; style_data(ws.cell(row=r, column=1))
     ws.cell(row=r, column=2).value = "ITEMS SUBTOTAL  (PAX Block 9 paste total)"; style_total(ws.cell(row=r, column=2))
     ws.cell(row=r, column=3).value = f"=C{r-1}"; style_total(ws.cell(row=r, column=3), num_fmt="#,##0")
-    ws.cell(row=r, column=4).value = "Equals Locked TPC / 1.23552"; style_data(ws.cell(row=r, column=4))
+    ws.cell(row=r, column=4).value = "Calibrated to PAX rollup chain"; style_data(ws.cell(row=r, column=4))
     items_sub_row = r; r += 2
 
-    style_banner(ws, r, last_col, "B.  PAX ROLLUP VERIFICATION  (mirrors what PAX prints on the form)"); r += 1
+    style_banner(ws, r, last_col, "B.  PAX ROLLUP VERIFICATION  (mirrors what PAX prints on the form; DB applied to items, not to TFC)"); r += 1
     for i,h in enumerate(headers, start=1):
         c = ws.cell(row=r, column=i); c.value = h; style_header(c)
     r += 1
     pax = [
-        ("Items Subtotal",                         f"=C{items_sub_row}",                              "From Section A"),
-        ("+ Contingency (10.0%)  PAX-applied",     f"=C{items_sub_row}*0.10",                         "FSRM program-directed"),
-        ("Total Contract Cost",                    f"=C{items_sub_row}*1.10",                         "Items Subtotal x 1.10"),
-        ("+ SIOH (8.0%)  PAX-applied",             f"=C{items_sub_row}*1.10*0.08",                    "OCONUS FSRM customer-directed"),
-        ("Total Funded Cost",                      f"=C{items_sub_row}*1.10*1.08",                    "Total Contract Cost x 1.08"),
-        ("+ DB Design (4.0%)  PAX-applied",        f"=C{items_sub_row}*1.10*1.08*0.04",               "UFC 3-730-01 (2024)"),
-        ("TOTAL PROJECT COST",                     f"=C{items_sub_row}*1.23552",                      "Total Funded Cost x 1.04"),
-        ("TOTAL PROJECT COST ($000 rounded)",      None,                                              "Printed face value on DD Form 1391"),
-        ("Locked TPC ($000 rounded)",              f"=ROUND(PARAMETERS!B{locked}/1000,0)",            "Reconciliation target"),
-        ("Reconciliation (must equal 0)",          None,                                              "Printed minus Locked"),
-        ("Planning and Design (6.0%)  NON ADD",    f"=C{items_sub_row}*0.06",                         "Informational; does not roll into TPC"),
+        ("Items Subtotal",                         f"=C{items_sub_row}",                                 "From Section A; pasted into PAX Block 9"),
+        ("+ Contingency (10.0%)  PAX-applied",     f"=ROUND(C{items_sub_row}*0.10,0)",                   "FSRM program-directed"),
+        ("Total Contract Cost (TCC)",              f"=ROUND(C{items_sub_row}*1.10,0)",                   "ROUND(items subtotal x 1.10)"),
+        ("+ SIOH (8.0%)  PAX-applied",             None,                                                  "OCONUS FSRM customer-directed; ROUND(TCC x 0.08)"),
+        ("Total Funded Cost (TFC)",                None,                                                  "ROUND(TCC x 1.08)"),
+        ("+ DB Design (4.0%)  PAX-applied",        f"=ROUND(C{items_sub_row}*0.04,0)",                   "UFC 3-730-01 (2024); PAX applies DB to items, not to TFC"),
+        ("TOTAL PROJECT COST",                     None,                                                  "TFC + DB Design  (mirrors PAX Total Request)"),
+        ("TOTAL PROJECT COST ($000 rounded)",      None,                                                  "Printed face value on DD Form 1391"),
+        ("Locked TPC ($000 rounded)",              f"=ROUND(PARAMETERS!B{locked}/1000,0)",               "Reconciliation target"),
+        ("Reconciliation (must equal 0)",          None,                                                  "Printed minus Locked"),
+        ("Planning and Design (6.0%)  NON ADD",    f"=ROUND(C{items_sub_row}*0.06,0)",                   "Informational; does not roll into TPC"),
     ]
-    tpc_full_row = None; tpc_round_row = None; locked_round_row = None
+    tpc_full_row = None; tpc_round_row = None; locked_round_row = None; tcc_row=None; tfc_row=None; db_row=None
     for label, val, note in pax:
         ws.cell(row=r, column=2).value = label; style_data(ws.cell(row=r, column=2), bold=True)
         c = ws.cell(row=r, column=3)
-        if label == "TOTAL PROJECT COST ($000 rounded)":
-            c.value = f"=ROUND(C{tpc_full_row}/1000,0)"
-            tpc_round_row = r
+        if label.startswith("Total Contract Cost"):
+            c.value = val; tcc_row = r
+        elif label == "+ SIOH (8.0%)  PAX-applied":
+            c.value = f"=ROUND(C{tcc_row}*0.08,0)"
+        elif label.startswith("Total Funded Cost"):
+            c.value = f"=ROUND(C{tcc_row}*1.08,0)"; tfc_row = r
+        elif label == "+ DB Design (4.0%)  PAX-applied":
+            c.value = val; db_row = r
+        elif label == "TOTAL PROJECT COST":
+            c.value = f"=C{tfc_row}+C{db_row}"; tpc_full_row = r
+        elif label == "TOTAL PROJECT COST ($000 rounded)":
+            c.value = f"=C{tpc_full_row}"; tpc_round_row = r
         elif label == "Reconciliation (must equal 0)":
             c.value = f"=C{tpc_round_row}-C{locked_round_row}"
         else:
@@ -525,14 +575,22 @@ def verify(b, path):
         for s,c,bad,v in leaks: print(f"    [{s}] {c}: {bad} :: {v}")
     return leaks
 
+def excel_round(x, digits=0):
+    import decimal
+    q = decimal.Decimal(10) ** -digits
+    return int(decimal.Decimal(str(x)).quantize(q, rounding=decimal.ROUND_HALF_UP))
+
+def pax_chain(items_k):
+    """Mirror PAX Form 1391 Processor rollup. items_k in $000."""
+    tcc = excel_round(items_k * 1.10)
+    tfc = excel_round(tcc * 1.08)
+    db  = excel_round(items_k * 0.04)
+    return tcc, tfc, db, tfc + db
+
 def python_reconcile(b, blk):
-    bd = sum(it["qty"]*it["uc"] for it in blk["items"])
-    presub = bd * 1.85 * (1.021**3) * 1.10
-    target = LOCKED[b]["tpc"] / 1.23552
-    caf = target / presub
-    sub = presub * caf
-    tpc = sub * 1.23552
-    return round(tpc), round(tpc/1000)
+    items_k = ITEMS_SUBTOTAL_TARGET_K[b]
+    _, _, _, tpc_k = pax_chain(items_k)
+    return tpc_k * 1000, tpc_k
 
 def build_one(b):
     blk = SCOPE[b]
