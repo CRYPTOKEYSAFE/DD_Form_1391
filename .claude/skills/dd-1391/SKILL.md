@@ -52,29 +52,40 @@ The PARAMETERS tab carries one live calibration cell labeled "Cost Adjustment Fa
 
 | Building | Fi Web | PAX ID | RPUID | iNFADS Description | Primary CCN | GSF | Locked TPC ($) | Items Subtotal Target ($000) | Locked TPC ($000) |
 |----------|--------|--------|-------|--------------------|-------------|----:|---------------:|-----------------------------:|------------------:|
-| Bldg 1024 | BU26PPE70M | 387356 | 148675 | MULTI PURPOSE BEQ/BOQ/CO HQS | 14345 | 84,861 | 10,413,140 | 8,428 | 10,413 |
-| SCH-3213 | BU26PPE72M | 387624 | 48879 | COMPANY HQ | 61010 | 13,484 | 5,397,928 | 4,369 | 5,398 |
-| SCH-3237 | BU26PPE73M | 387622 | 51473 | WAREHOUSE/ARMORY | 44112 | 30,973 | 1,455,526 | 1,178 | 1,456 |
-| SCH-3270 | BU26PPE74M | 387568 | 1174058 | AUTO ORGANIZATIONAL SHOP CAB | 21451 | 25,390 | 3,527,753 | 2,855 | 3,528 |
-| SCH-3314 | BU26PPE71M | 387433 | 50931 | BATTALION SQUADRON HEADQUARTERS | 61072 | 28,699 | 1,949,383 | 1,578 | 1,949 |
+| Bldg 1024 | BU26PPE70M | 387356 | 148675 | MULTI PURPOSE BEQ/BOQ/CO HQS | 14345 | 84,861 | 10,413,140 | 8,480 | 10,413 |
+| SCH-3213 | BU26PPE72M | 387624 | 48879 | COMPANY HQ | 61010 | 13,484 | 5,397,928 | 4,395 | 5,398 |
+| SCH-3237 | BU26PPE73M | 387622 | 51473 | WAREHOUSE/ARMORY | 44112 | 30,973 | 1,455,526 | 1,186 | 1,456 |
+| SCH-3270 | BU26PPE74M | 387568 | 1174058 | AUTO ORGANIZATIONAL SHOP CAB | 21451 | 25,390 | 3,527,753 | 2,873 | 3,528 |
+| SCH-3314 | BU26PPE71M | 387433 | 50931 | BATTALION SQUADRON HEADQUARTERS | 61072 | 28,699 | 1,949,383 | 1,587 | 1,949 |
 
-Portfolio Locked TPC: $22,743,730. All Fi Web suffixes are M. Items Subtotal Target = LockedTPC / 1.23552, rounded to $000; this is the value the discipline rollups must sum to before PAX percentages are applied.
+Portfolio Locked TPC: $22,743,730. All Fi Web suffixes are M. Items Subtotal Target ($000) per building is calibrated against PAX's per-step rounding chain (see PAX rollup math section); the discipline rollups must sum to this value exactly. The largest discipline carries a plug formula in DD1391_BLOCK9 that absorbs rounding from the natural-formula disciplines so the sum lands precisely on target.
 
-## PAX rollup math
+## PAX rollup math (observed empirically from PAX Form 1391 Processor)
 
 ```
-Items Subtotal (the discipline rollups summed; pasted into PAX)
-TCC = Items Subtotal x 1.10   (Cont 10% PAX-applied)
-TFC = TCC x 1.08              (SIOH 8% PAX-applied)
-TPC = TFC x 1.04              (DB 4% PAX-applied)
-PD  = Items Subtotal x 0.06   (NON ADD; informational only)
-TPC = Items Subtotal x 1.23552
-Items Subtotal Target = LockedTPC / 1.23552
+Items Subtotal (the discipline rollups summed; pasted into PAX, $000)
+TCC = ROUND(Items Subtotal x 1.10)   (Cont 10% PAX-applied)
+TFC = ROUND(TCC x 1.08)              (SIOH 8% PAX-applied)
+DB  = ROUND(Items Subtotal x 0.04)   (DB 4% PAX-applied to ITEMS, not to TFC)
+TPC = TFC + DB                       (additive, not compounded)
+PD  = Items Subtotal x 0.06          (NON ADD; informational only)
 ```
+
+PAX applies DB Design 4% to the items subtotal, not to TFC. The effective multiplier from items to TPC is 1.10 x 1.08 + 0.04 = 1.228, NOT 1.10 x 1.08 x 1.04 = 1.23552. PAX rounds at each step (TCC, TFC, DB) using Excel-style round-half-away-from-zero, then sums TFC + DB to produce the printed TPC.
 
 Acronyms: TCC = Total Contract Cost (Items Subtotal + Contingency). TFC = Total Funded Cost (TCC + SIOH). TPC = Total Project Cost (TFC + DB Design); the printed face value on the DD Form 1391. PD = Planning and Design (NON ADD; does not roll into TPC).
 
-All five buildings reconcile delta = 0 at $000 at multiplier 1.23552.
+Items Subtotal Target ($000) is calibrated per building so the per-step rounding chain produces the Locked TPC at $000 exactly. Per-building targets:
+
+| Building | Locked TPC ($) | Locked TPC ($000) | Items Subtotal Target ($000) |
+|----------|---------------:|-------------------:|------------------------------:|
+| Bldg 1024 | 10,413,140 | 10,413 | 8,480 |
+| SCH-3213 | 5,397,928 | 5,398 | 4,395 |
+| SCH-3237 | 1,455,526 | 1,456 | 1,186 |
+| SCH-3270 | 3,527,753 | 3,528 | 2,873 |
+| SCH-3314 | 1,949,383 | 1,949 | 1,587 |
+
+All five buildings reconcile delta = 0 at $000 with the PAX chain above.
 
 ## Hard rules
 

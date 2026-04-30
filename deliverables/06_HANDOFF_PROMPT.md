@@ -18,25 +18,27 @@ Status: all five FY26 cost estimate workbooks built, reconciled to locked TPC at
 
 | Building | File | Locked TPC ($) | Items Subtotal Target ($000) | Workbook TPC ($000) | Δ |
 |---|---|---:|---:|---:|---:|
-| Bldg 1024 | `1024_G_CEPBKUP_BU26PPE70M_POM26_20260319.xlsx` | 10,413,140 | 8,428 | 10,413 | 0 |
-| SCH-3213 | `3213_G_CEPBKUP_BU26PPE72M_POM26_20260320.xlsx` | 5,397,928 | 4,369 | 5,398 | 0 |
-| SCH-3237 | `3237_G_CEPBKUP_BU26PPE73M_POM26_20260309.xlsx` | 1,455,526 | 1,178 | 1,456 | 0 |
-| SCH-3270 | `3270_G_CEPBKUP_BU26PPE74M_POM26_20260319.xlsx` | 3,527,753 | 2,855 | 3,528 | 0 |
-| SCH-3314 | `3314_G_CEPBKUP_BU26PPE71M_POM26_20260318.xlsx` | 1,949,383 | 1,578 | 1,949 | 0 |
+| Bldg 1024 | `1024_G_CEPBKUP_BU26PPE70M_POM26_20260319.xlsx` | 10,413,140 | 8,480 | 10,413 | 0 |
+| SCH-3213 | `3213_G_CEPBKUP_BU26PPE72M_POM26_20260320.xlsx` | 5,397,928 | 4,395 | 5,398 | 0 |
+| SCH-3237 | `3237_G_CEPBKUP_BU26PPE73M_POM26_20260309.xlsx` | 1,455,526 | 1,186 | 1,456 | 0 |
+| SCH-3270 | `3270_G_CEPBKUP_BU26PPE74M_POM26_20260319.xlsx` | 3,527,753 | 2,873 | 3,528 | 0 |
+| SCH-3314 | `3314_G_CEPBKUP_BU26PPE71M_POM26_20260318.xlsx` | 1,949,383 | 1,587 | 1,949 | 0 |
 
 Portfolio Locked TPC: $22,743,730. All Fi Web suffixes are M. The R suffix on the previous SCH-3270 file copy was a clerical error and is corrected.
 
 ## Load-bearing rule
 
-Anthony pastes each workbook's DD1391_BLOCK9 discipline rollups into the PAX Block 9 items table. PAX applies the four pre-loaded Associated Costs percentages and prints the form. Printed TPC must equal Locked TPC at $000. Math, exactly:
+Anthony pastes each workbook's DD1391_BLOCK9 discipline rollups into the PAX Block 9 items table. PAX applies the four pre-loaded Associated Costs percentages and prints the form. Printed TPC must equal Locked TPC at $000. Math, observed empirically from PAX Form 1391 Processor:
 
 ```
-Items Subtotal Target = Locked TPC / 1.23552  (1.10 x 1.08 x 1.04)
-TCC = Items Subtotal x 1.10   (Cont 10% PAX-applied)
-TFC = TCC x 1.08              (SIOH 8% PAX-applied)
-TPC = TFC x 1.04              (DB 4% PAX-applied)
-PD  = Items Subtotal x 0.06   (NON ADD; informational only; does not roll into TPC)
+TCC = ROUND(Items Subtotal x 1.10)   (Cont 10% PAX-applied)
+TFC = ROUND(TCC x 1.08)              (SIOH 8% PAX-applied)
+DB  = ROUND(Items Subtotal x 0.04)   (DB 4% PAX-applied to ITEMS, not to TFC)
+TPC = TFC + DB                       (additive, not compounded)
+PD  = ROUND(Items Subtotal x 0.06)   (NON ADD; informational only)
 ```
+
+PAX applies DB Design 4% to the items subtotal, NOT to TFC. The effective multiplier is 1.10 x 1.08 + 0.04 = 1.228, NOT 1.23552. Items Subtotal Target ($000) is calibrated per building so the per-step rounding chain produces Locked TPC.
 
 The Cost Adjustment Factor in PARAMETERS is the calibration knob. It is a live formula:
 
